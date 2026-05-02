@@ -5,6 +5,7 @@ from transformers import AutoFeatureExtractor, AutoModelForImageClassification
 import io
 import json
 import os
+import numpy as np
 from db.database import save_query, get_history
 
 router = APIRouter()
@@ -43,6 +44,18 @@ async def detect_pest(file: UploadFile = File(...)):
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
         
+        # Check image content (reject flat colors)
+        img_array = np.array(image)
+        if img_array.std() < 15:
+            return {
+                "disease": "Not a plant image",
+                "confidence": 0.0,
+                "severity": "None", 
+                "treatment": "This does not appear to be a plant leaf. Please upload a real crop leaf photo.",
+                "prevention": "Tips: Fill the frame with the leaf. Use good lighting.",
+                "raw_label": "unrecognized"
+            }
+
         # Inference
         inputs = extractor(images=image, return_tensors="pt")
         with torch.no_grad():
@@ -51,16 +64,26 @@ async def detect_pest(file: UploadFile = File(...)):
             
         # Get prediction
         predicted_class_idx = logits.argmax(-1).item()
-        labels = model.config.id2label
-        raw_label = labels[predicted_class_idx]
+        raw_label = model.config.id2label[predicted_class_idx]
         confidence = torch.nn.functional.softmax(logits, dim=-1)[0][predicted_class_idx].item()
         
-        # Lookup treatment
+        # Stronger confidence check for non-plant images
+        if confidence < 0.40:
+            return {
+                "disease": "Not a plant image",
+                "confidence": float(round(confidence, 4)),
+                "severity": "None",
+                "treatment": "This does not appear to be a plant leaf image. Please upload a clear photo of a crop leaf.",
+                "prevention": "Tips: Fill the frame with the leaf. Use good lighting. Avoid blurry images.",
+                "raw_label": "unrecognized"
+            }
+
+        # FIX 3: Structured Fallback
         treatment_info = treatments_data.get(raw_label, {
-            "display_name": raw_label.replace("___", " ").replace("_", " "),
-            "severity": "Unknown",
-            "treatment": "Consult a local agricultural expert.",
-            "prevention": "Maintain general plant hygiene."
+            "display_name": raw_label.replace("_", " ").replace("  ", " "),
+            "severity": "Medium",
+            "treatment": "Apply broad-spectrum fungicide. Remove visibly infected leaves.",
+            "prevention": "Maintain proper plant spacing and avoid waterlogging."
         })
         
         response = {

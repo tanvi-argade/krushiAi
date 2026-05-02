@@ -58,6 +58,8 @@ const PestDetection = ({ styles }) => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const fileInputRef = React.useRef(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -89,31 +91,63 @@ const PestDetection = ({ styles }) => {
     }
   };
 
+  const uploadAreaStyle = {
+    width: '100%',
+    height: '220px',
+    border: '2px dashed #4caf50',
+    borderRadius: '12px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: isHovered ? '#dcedc8' : '#f1f8e9',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+    margin: '20px 0',
+    overflow: 'hidden'
+  };
+
   return (
     <div style={styles.card}>
       <h2>Pest & Disease Detection</h2>
       <p>Upload a clear photo of the affected plant part (leaf, fruit, stem).</p>
       
-      <div style={{ margin: '20px 0', border: '2px dashed #ccc', padding: '20px', textAlign: 'center', borderRadius: '10px' }}>
-        <input type="file" accept="image/*" onChange={handleFileChange} id="fileInput" style={{ display: 'none' }} />
-        <label htmlFor="fileInput" style={{ ...styles.button, display: 'inline-block' }}>Choose Image</label>
+      <div 
+        style={uploadAreaStyle}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onClick={() => fileInputRef.current.click()}
+      >
+        <input 
+          type="file" 
+          accept="image/*" 
+          onChange={handleFileChange} 
+          ref={fileInputRef} 
+          style={{ display: 'none' }} 
+        />
         
-        {preview && (
-          <div style={{ marginTop: '20px' }}>
-            <img src={preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '8px' }} />
+        {!preview ? (
+          <div style={{ textAlign: 'center', color: '#2d5a27' }}>
+            <div style={{ fontSize: '32px', marginBottom: '10px' }}>📁</div>
+            <div style={{ fontWeight: 'bold' }}>Click anywhere here to choose a leaf image</div>
+          </div>
+        ) : (
+          <div style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <img src={preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '180px', objectFit: 'contain' }} />
+            <div style={{ fontSize: '12px', color: '#2d5a27', marginTop: '5px' }}>Click to change image</div>
           </div>
         )}
       </div>
 
       <button 
-        style={{ ...styles.button, width: '100%', opacity: (!selectedFile || loading) ? 0.6 : 1 }} 
+        style={{ ...styles.button, width: '100%', opacity: (!selectedFile || loading) ? 0.6 : 1, marginTop: '10px' }} 
         disabled={!selectedFile || loading}
         onClick={detectDisease}
       >
         {loading ? 'Analyzing...' : 'Detect Disease'}
       </button>
 
-      {error && <div style={{ color: 'red', marginTop: '20px', padding: '10px', backgroundColor: '#fee' }}>{error}</div>}
+      {error && <div style={{ color: 'red', marginTop: '20px', padding: '10px', backgroundColor: '#fee', borderRadius: '5px' }}>{error}</div>}
 
       {result && (
         <div style={{ marginTop: '30px', padding: '20px', border: '1px solid #eee', borderRadius: '8px', backgroundColor: '#fdfdfd' }}>

@@ -1,263 +1,263 @@
 {
-  "Apple___Apple_scab": {
+  "Apple Scab": {
     "display_name": "Apple Scab",
     "severity": "Medium",
     "treatment": "Apply captan or mancozeb fungicide. Remove infected leaves and fruit from the ground.",
     "prevention": "Ensure good air circulation. Avoid overhead watering. Plant resistant varieties."
   },
-  "Apple___Black_rot": {
+  "Apple with Black Rot": {
     "display_name": "Apple Black Rot",
     "severity": "High",
     "treatment": "Prune out infected branches and cankers. Apply fungicides like captan during the growing season.",
     "prevention": "Remove mummified fruit. Keep the orchard clean of debris."
   },
-  "Apple___Cedar_apple_rust": {
+  "Cedar Apple Rust": {
     "display_name": "Cedar Apple Rust",
     "severity": "Medium",
     "treatment": "Apply myclobutanil or sulfur fungicides. Remove nearby juniper trees if possible.",
     "prevention": "Use resistant cultivars. Maintain proper tree spacing."
   },
-  "Apple___healthy": {
+  "Healthy Apple": {
     "display_name": "Apple Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Continue monitoring and maintain good cultural practices."
   },
-  "Blueberry___healthy": {
+  "Healthy Blueberry Plant": {
     "display_name": "Blueberry Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Maintain soil acidity and proper irrigation."
   },
-  "Cherry_(including_sour)___Powdery_mildew": {
+  "Cherry with Powdery Mildew": {
     "display_name": "Cherry Powdery Mildew",
     "severity": "Low",
     "treatment": "Apply sulfur or potassium bicarbonate sprays. Increase sunlight exposure.",
     "prevention": "Avoid nitrogen over-fertilization. Prune for better airflow."
   },
-  "Cherry_(including_sour)___healthy": {
+  "Healthy Cherry Plant": {
     "display_name": "Cherry Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Monitor for pests like cherry fruit fly."
   },
-  "Corn_(maize)___Cercospora_leaf_spot_Gray_leaf_spot": {
+  "Corn (Maize) with Cercospora and Gray Leaf Spot": {
     "display_name": "Corn Gray Leaf Spot",
     "severity": "Medium",
     "treatment": "Apply foliar fungicides like strobilurins. Rotate crops.",
     "prevention": "Use resistant hybrids. Manage crop residue through tillage."
   },
-  "Corn_(maize)___Common_rust_": {
+  "Corn (Maize) with Common Rust": {
     "display_name": "Corn Common Rust",
     "severity": "Medium",
     "treatment": "Apply fungicides if disease is severe and detected early. Ensure adequate nutrition.",
     "prevention": "Plant resistant hybrids. Manage planting dates."
   },
-  "Corn_(maize)___Northern_Leaf_Blight": {
+  "Corn (Maize) with Northern Leaf Blight": {
     "display_name": "Corn Northern Leaf Blight",
     "severity": "High",
     "treatment": "Apply fungicides like azoxystrobin. Remove infected debris.",
     "prevention": "Rotate with non-host crops. Use resistant varieties."
   },
-  "Corn_(maize)___healthy": {
+  "Healthy Corn (Maize) Plant": {
     "display_name": "Corn Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Monitor soil moisture and nutrient levels."
   },
-  "Grape___Black_rot": {
+  "Grape with Black Rot": {
     "display_name": "Grape Black Rot",
     "severity": "High",
     "treatment": "Prune and destroy infected vines. Apply fungicides like mancozeb or myclobutanil.",
     "prevention": "Remove mummified berries. Keep vines off the ground."
   },
-  "Grape___Esca_(Black_Measles)": {
+  "Grape with Esca (Black Measles)": {
     "display_name": "Grape Esca",
     "severity": "Medium",
     "treatment": "No effective chemical treatment for established vines. Prune out infected parts.",
     "prevention": "Protect pruning wounds with sealants. Avoid water stress."
   },
-  "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": {
+  "Grape with Isariopsis Leaf Spot": {
     "display_name": "Grape Leaf Blight",
     "severity": "Medium",
     "treatment": "Apply copper-based fungicides. Remove fallen leaves.",
     "prevention": "Ensure good drainage and canopy management."
   },
-  "Grape___healthy": {
+  "Healthy Grape Plant": {
     "display_name": "Grape Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Maintain proper pruning and training systems."
   },
-  "Orange___Haunglongbing_(Citrus_greening)": {
+  "Orange with Citrus Greening": {
     "display_name": "Citrus Greening",
     "severity": "High",
     "treatment": "No cure. Remove and destroy infected trees to prevent spread. Control Asian citrus psyllid.",
     "prevention": "Use certified disease-free nursery stock. Monitor for psyllids."
   },
-  "Peach___Bacterial_spot": {
+  "Peach with Bacterial Spot": {
     "display_name": "Peach Bacterial Spot",
     "severity": "Medium",
     "treatment": "Apply copper-based sprays or oxytetracycline. Prune during dormant season.",
     "prevention": "Plant resistant varieties. Avoid high nitrogen levels."
   },
-  "Peach___healthy": {
+  "Healthy Peach Plant": {
     "display_name": "Peach Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Maintain tree vigor through proper fertilization."
   },
-  "Pepper,_bell___Bacterial_spot": {
+  "Bell Pepper with Bacterial Spot": {
     "display_name": "Pepper Bacterial Spot",
     "severity": "Medium",
     "treatment": "Apply copper fungicides. Remove infected plants immediately.",
     "prevention": "Use pathogen-free seeds. Avoid overhead irrigation."
   },
-  "Pepper,_bell___healthy": {
+  "Healthy Bell Pepper Plant": {
     "display_name": "Pepper Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Practice crop rotation."
   },
-  "Potato___Early_blight": {
+  "Potato with Early Blight": {
     "display_name": "Potato Early Blight",
     "severity": "Medium",
     "treatment": "Apply chlorothalonil or mancozeb fungicides. Ensure adequate potassium.",
     "prevention": "Rotate crops. Keep foliage dry. Remove plant debris."
   },
-  "Potato___Late_blight": {
+  "Potato with Late Blight": {
     "display_name": "Potato Late Blight",
     "severity": "High",
     "treatment": "Apply metalaxyl-based fungicides. Destroy infected tubers.",
     "prevention": "Avoid wet conditions. Use resistant varieties. Monitor weather forecasts."
   },
-  "Potato___healthy": {
+  "Healthy Potato Plant": {
     "display_name": "Potato Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Use certified seed potatoes."
   },
-  "Raspberry___healthy": {
+  "Healthy Raspberry Plant": {
     "display_name": "Raspberry Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Maintain proper spacing for airflow."
   },
-  "Soybean___healthy": {
+  "Healthy Soybean Plant": {
     "display_name": "Soybean Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Monitor for soybean cyst nematode."
   },
-  "Squash___Powdery_mildew": {
+  "Squash with Powdery Mildew": {
     "display_name": "Squash Powdery Mildew",
     "severity": "Low",
     "treatment": "Apply neem oil or sulfur-based fungicides. Water at the base of the plant.",
     "prevention": "Select resistant varieties. Avoid overcrowding."
   },
-  "Strawberry___Leaf_scorch": {
+  "Strawberry with Leaf Scorch": {
     "display_name": "Strawberry Leaf Scorch",
     "severity": "Medium",
     "treatment": "Apply fungicides containing captan. Remove infected leaves.",
     "prevention": "Use drip irrigation. Renovate beds regularly."
   },
-  "Strawberry___healthy": {
+  "Healthy Strawberry Plant": {
     "display_name": "Strawberry Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Keep fruit off the ground with mulch."
   },
-  "Tomato___Bacterial_spot": {
+  "Tomato with Bacterial Spot": {
     "display_name": "Tomato Bacterial Spot",
     "severity": "Medium",
     "treatment": "Apply copper sprays mixed with mancozeb. Remove infected plants.",
     "prevention": "Practice 3-year crop rotation. Use clean seeds."
   },
-  "Tomato___Early_blight": {
+  "Tomato with Early Blight": {
     "display_name": "Tomato Early Blight",
     "severity": "Medium",
     "treatment": "Apply mancozeb 2g/L. Avoid overhead irrigation. Remove lower leaves.",
     "prevention": "Mulch around plants. Rotate with non-solanaceous crops."
   },
-  "Tomato___Late_blight": {
+  "Tomato with Late Blight": {
     "display_name": "Tomato Late Blight",
     "severity": "High",
     "treatment": "Apply copper-based fungicides immediately. Destroy infected plants.",
     "prevention": "Ensure good air circulation. Monitor during cool, wet weather."
   },
-  "Tomato___Leaf_Mold": {
+  "Tomato with Leaf Mold": {
     "display_name": "Tomato Leaf Mold",
     "severity": "Medium",
     "treatment": "Increase ventilation in greenhouses. Apply fungicides like chlorothalonil.",
     "prevention": "Avoid wetting foliage. Prune for better airflow."
   },
-  "Tomato___Septoria_leaf_spot": {
+  "Tomato with Septoria Leaf Spot": {
     "display_name": "Tomato Septoria Leaf Spot",
     "severity": "Medium",
     "treatment": "Apply fungicides containing chlorothalonil or copper. Remove infected leaves.",
     "prevention": "Control weeds. Practice crop rotation."
   },
-  "Tomato___Spider_mites_Two-spotted_spider_mite": {
+  "Tomato with Spider Mites or Two-spotted Spider Mite": {
     "display_name": "Tomato Spider Mites",
     "severity": "Medium",
     "treatment": "Apply miticides or neem oil. Use predatory mites.",
     "prevention": "Keep plants well-hydrated. Avoid dusty conditions."
   },
-  "Tomato___Target_Spot": {
+  "Tomato with Target Spot": {
     "display_name": "Tomato Target Spot",
     "severity": "Medium",
     "treatment": "Apply fungicides like azoxystrobin. Ensure adequate plant spacing.",
     "prevention": "Remove plant debris after harvest."
   },
-  "Tomato___Tomato_Yellow_Leaf_Curl_Virus": {
+  "Tomato Yellow Leaf Curl Virus": {
     "display_name": "Tomato Yellow Leaf Curl Virus",
     "severity": "High",
     "treatment": "Control whiteflies with insecticides or neem oil. Remove infected plants.",
     "prevention": "Use UV-reflective mulches. Plant resistant hybrids."
   },
-  "Tomato___Tomato_mosaic_virus": {
+  "Tomato Mosaic Virus": {
     "display_name": "Tomato Mosaic Virus",
     "severity": "High",
     "treatment": "No cure. Remove and burn infected plants immediately to prevent spread.",
     "prevention": "Sanitize tools. Avoid tobacco use near plants."
   },
-  "Tomato___healthy": {
+  "Healthy Tomato Plant": {
     "display_name": "Tomato Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Maintain consistent watering and nutrient supply."
   },
-  "Rice___Brown_Spot": {
+  "Rice Brown Spot": {
     "display_name": "Rice Brown Spot",
     "severity": "Medium",
     "treatment": "Apply fungicides like edifenphos or carbendazim. Balance soil nutrients.",
     "prevention": "Use healthy seeds. Improve soil fertility."
   },
-  "Rice___Leaf_Blast": {
+  "Rice Leaf Blast": {
     "display_name": "Rice Leaf Blast",
     "severity": "High",
     "treatment": "Apply tricyclazole or carbendazim. Avoid excessive nitrogen.",
     "prevention": "Plant resistant varieties. Manage water levels carefully."
   },
-  "Rice___healthy": {
+  "Rice Healthy": {
     "display_name": "Rice Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
     "prevention": "Maintain optimal water management."
   },
-  "Wheat___Septoria": {
+  "Wheat Septoria": {
     "display_name": "Wheat Septoria",
     "severity": "Medium",
     "treatment": "Apply fungicides like tebuconazole. Ensure proper seed treatment.",
     "prevention": "Rotate crops. Remove volunteer wheat plants."
   },
-  "Wheat___Yellow_Rust_Stripe_Rust": {
+  "Wheat Yellow Rust": {
     "display_name": "Wheat Yellow Rust",
     "severity": "High",
     "treatment": "Apply fungicides like propiconazole immediately upon detection.",
     "prevention": "Plant resistant varieties. Avoid late sowing."
   },
-  "Wheat___healthy": {
+  "Wheat Healthy": {
     "display_name": "Wheat Healthy",
     "severity": "None",
     "treatment": "No treatment needed.",
