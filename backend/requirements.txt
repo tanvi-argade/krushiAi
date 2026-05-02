@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pillow
+transformers
+torch
+torchvision
+scikit-learn
+pandas
+numpy
+requests
+python-multipart

@@ -1,0 +1,64 @@
+# Dependency directories
+node_modules/
+venv/
+.venv/
+env/
+.env/
+backend/venv/
+frontend/node_modules/
+
+# Build and distribution
+build/
+dist/
+frontend/build/
+frontend/dist/
+
+# Python cache and metadata
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Database
+*.db
+*.sqlite3
+backend/db/*.db
+!backend/db/.gitkeep
+
+# ML / AI artifacts
+*.pt
+*.pth
+*.bin
+*.pkl
+*.h5
+*.onnx
+*.safetensors
+.huggingface/
+.cache/huggingface/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Misc
+.pnp
+.pnp.js
+coverage/
+frontend/coverage/

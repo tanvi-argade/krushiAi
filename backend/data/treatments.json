@@ -1,0 +1,12 @@
+[
+    {"disease": "Early Blight", "treatment": "Apply mancozeb 2g/L. Avoid overhead irrigation."},
+    {"disease": "Late Blight", "treatment": "Use copper-based fungicides. Ensure good air circulation."},
+    {"disease": "Powdery Mildew", "treatment": "Apply sulfur-based spray or neem oil. Reduce humidity."},
+    {"disease": "Rust", "treatment": "Remove infected leaves. Apply fungicide containing tebuconazole."},
+    {"disease": "Leaf Spot", "treatment": "Crop rotation and clean seeds. Apply chlorothalonil."},
+    {"disease": "Downy Mildew", "treatment": "Avoid wet foliage. Apply metalaxyl or mancozeb."},
+    {"disease": "Root Rot", "treatment": "Improve soil drainage. Drench soil with carbendazim."},
+    {"disease": "Citrus Canker", "treatment": "Prune infected branches. Spray copper oxychloride."},
+    {"disease": "Fusarium Wilt", "treatment": "Use resistant varieties. Soil solarization."},
+    {"disease": "Mosaic Virus", "treatment": "Control aphids/vectors. Remove and burn infected plants."}
+]
