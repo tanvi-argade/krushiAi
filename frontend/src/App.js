@@ -2,110 +2,132 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const App = () => {
-  const [healthStatus, setHealthStatus] = useState('Checking backend...');
   const [activeTab, setActiveTab] = useState('Home');
+  const [healthStatus, setHealthStatus] = useState('Checking...');
 
   useEffect(() => {
-    const checkHealth = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/');
-        setHealthStatus(response.data.status);
-      } catch (error) {
-        setHealthStatus('Backend not reachable');
-      }
-    };
-    checkHealth();
+    axios.get('http://localhost:8000/')
+      .then(res => setHealthStatus(res.data.status))
+      .catch(err => setHealthStatus('Backend Offline'));
   }, []);
 
   const styles = {
-    container: {
-      fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
-      margin: 0,
-      padding: 0,
-      backgroundColor: '#f4f7f6',
-      minHeight: '100vh',
-    },
-    navbar: {
-      backgroundColor: '#2e7d32',
-      color: 'white',
-      padding: '1rem 2rem',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    },
-    navLinks: {
-      display: 'flex',
-      gap: '20px',
-    },
-    link: {
-      color: 'white',
-      textDecoration: 'none',
-      cursor: 'pointer',
-      fontWeight: '500',
-    },
-    content: {
-      padding: '2rem',
-      maxWidth: '1200px',
-      margin: '0 auto',
-    },
-    card: {
-      backgroundColor: 'white',
-      padding: '2rem',
-      borderRadius: '8px',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
-      textAlign: 'center',
-    },
-    status: {
-      marginTop: '1rem',
-      padding: '0.5rem 1rem',
-      borderRadius: '20px',
-      display: 'inline-block',
-      backgroundColor: healthStatus === 'KrushiAI backend running' ? '#e8f5e9' : '#ffebee',
-      color: healthStatus === 'KrushiAI backend running' ? '#2e7d32' : '#c62828',
-      fontWeight: 'bold',
-    }
-  };
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'Crop Advisor':
-        return <h2>Crop Advisory Module (Coming Soon)</h2>;
-      case 'Pest Detection':
-        return <h2>Pest Detection Module (Coming Soon)</h2>;
-      case 'Market Predictor':
-        return <h2>Market Price Predictor (Coming Soon)</h2>;
-      case 'Irrigation':
-        return <h2>Irrigation Scheduler (Coming Soon)</h2>;
-      default:
-        return (
-          <div style={styles.card}>
-            <h1>Welcome to KrushiAI</h1>
-            <p>Your AI-powered farm advisory platform.</p>
-            <div style={styles.status}>
-              System Status: {healthStatus}
-            </div>
-          </div>
-        );
+    container: { fontFamily: 'Segoe UI, sans-serif', minHeight: '100vh', backgroundColor: '#f8f9fa' },
+    nav: { backgroundColor: '#2d5a27', padding: '15px 30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'white', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' },
+    navLinks: { display: 'flex', gap: '20px' },
+    navLink: (active) => ({ cursor: 'pointer', fontWeight: active ? 'bold' : 'normal', borderBottom: active ? '2px solid white' : 'none' }),
+    content: { padding: '30px', maxWidth: '1000px', margin: '0 auto' },
+    card: { backgroundColor: 'white', padding: '25px', borderRadius: '12px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' },
+    button: { backgroundColor: '#2d5a27', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer', fontSize: '16px' },
+    badge: (severity) => {
+      const colors = { High: '#dc3545', Medium: '#ffc107', Low: '#28a745', None: '#6c757d', Unknown: '#6c757d' };
+      return { padding: '5px 12px', borderRadius: '20px', backgroundColor: colors[severity] || '#6c757d', color: 'white', fontSize: '14px', fontWeight: 'bold' };
     }
   };
 
   return (
     <div style={styles.container}>
-      <nav style={styles.navbar}>
-        <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }} onClick={() => setActiveTab('Home')}>
-          KrushiAI
-        </div>
+      <nav style={styles.nav}>
+        <div style={{ fontSize: '24px', fontWeight: 'bold' }}>KrushiAI</div>
         <div style={styles.navLinks}>
-          <span style={styles.link} onClick={() => setActiveTab('Crop Advisor')}>Crop Advisor</span>
-          <span style={styles.link} onClick={() => setActiveTab('Pest Detection')}>Pest Detection</span>
-          <span style={styles.link} onClick={() => setActiveTab('Market Predictor')}>Market Predictor</span>
-          <span style={styles.link} onClick={() => setActiveTab('Irrigation')}>Irrigation</span>
+          <span style={styles.navLink(activeTab === 'Home')} onClick={() => setActiveTab('Home')}>Home</span>
+          <span style={styles.navLink(activeTab === 'Pest')} onClick={() => setActiveTab('Pest')}>Pest Detection</span>
+          <span style={styles.navLink(activeTab === 'Crop')} onClick={() => setActiveTab('Crop')}>Crop Advisor</span>
         </div>
       </nav>
-      <main style={styles.content}>
-        {renderContent()}
-      </main>
+
+      <div style={styles.content}>
+        {activeTab === 'Home' && (
+          <div style={styles.card}>
+            <h1>Welcome to KrushiAI</h1>
+            <p>Advanced AI tools for smart farming.</p>
+            <p>System Status: <span style={{ color: healthStatus.includes('running') ? 'green' : 'red' }}>{healthStatus}</span></p>
+          </div>
+        )}
+
+        {activeTab === 'Pest' && <PestDetection styles={styles} />}
+        {activeTab === 'Crop' && <div style={styles.card}><h2>Crop Advisory (Coming Soon)</h2></div>}
+      </div>
+    </div>
+  );
+};
+
+const PestDetection = ({ styles }) => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
+      setResult(null);
+      setError(null);
+    }
+  };
+
+  const detectDisease = async () => {
+    if (!selectedFile) return;
+    setLoading(true);
+    setError(null);
+    
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    try {
+      const response = await axios.post('http://localhost:8000/pest/detect', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setResult(response.data);
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Error connecting to backend.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div style={styles.card}>
+      <h2>Pest & Disease Detection</h2>
+      <p>Upload a clear photo of the affected plant part (leaf, fruit, stem).</p>
+      
+      <div style={{ margin: '20px 0', border: '2px dashed #ccc', padding: '20px', textAlign: 'center', borderRadius: '10px' }}>
+        <input type="file" accept="image/*" onChange={handleFileChange} id="fileInput" style={{ display: 'none' }} />
+        <label htmlFor="fileInput" style={{ ...styles.button, display: 'inline-block' }}>Choose Image</label>
+        
+        {preview && (
+          <div style={{ marginTop: '20px' }}>
+            <img src={preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: '8px' }} />
+          </div>
+        )}
+      </div>
+
+      <button 
+        style={{ ...styles.button, width: '100%', opacity: (!selectedFile || loading) ? 0.6 : 1 }} 
+        disabled={!selectedFile || loading}
+        onClick={detectDisease}
+      >
+        {loading ? 'Analyzing...' : 'Detect Disease'}
+      </button>
+
+      {error && <div style={{ color: 'red', marginTop: '20px', padding: '10px', backgroundColor: '#fee' }}>{error}</div>}
+
+      {result && (
+        <div style={{ marginTop: '30px', padding: '20px', border: '1px solid #eee', borderRadius: '8px', backgroundColor: '#fdfdfd' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ margin: 0 }}>Result: {result.disease}</h3>
+            <span style={styles.badge(result.severity)}>{result.severity} Severity</span>
+          </div>
+          <p><strong>Confidence:</strong> {(result.confidence * 100).toFixed(2)}%</p>
+          <hr />
+          <p><strong>Treatment:</strong> {result.treatment}</p>
+          <p><strong>Prevention:</strong> {result.prevention}</p>
+          <p style={{ fontSize: '12px', color: '#888' }}>Model Label: {result.raw_label}</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import pest, crop, market, irrigation
+from routes import pest
 from db.database import init_db
 
 app = FastAPI(title="KrushiAI API")
@@ -16,9 +16,6 @@ app.add_middleware(
 
 # Register routes
 app.include_router(pest.router, prefix="/pest", tags=["Pest Detection"])
-app.include_router(crop.router, prefix="/crop", tags=["Crop Recommendation"])
-app.include_router(market.router, prefix="/market", tags=["Market Prediction"])
-app.include_router(irrigation.router, prefix="/irrigation", tags=["Irrigation Scheduling"])
 
 @app.on_event("startup")
 async def startup_event():

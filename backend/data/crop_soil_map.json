@@ -1,37 +1,23 @@
 [
-    {
-        "crop": "Rice",
-        "soil_types": ["Alluvial", "Clayey"],
-        "states": ["West Bengal", "Uttar Pradesh", "Punjab", "Andhra Pradesh", "Tamil Nadu"],
-        "estimated_yield_per_acre": "2.5 Tons",
-        "estimated_profit_per_acre_inr": 35000
-    },
-    {
-        "crop": "Wheat",
-        "soil_types": ["Loamy", "Clayey"],
-        "states": ["Uttar Pradesh", "Punjab", "Haryana", "Madhya Pradesh", "Rajasthan"],
-        "estimated_yield_per_acre": "2.0 Tons",
-        "estimated_profit_per_acre_inr": 40000
-    },
-    {
-        "crop": "Cotton",
-        "soil_types": ["Black Soil", "Alluvial"],
-        "states": ["Gujarat", "Maharashtra", "Telangana", "Rajasthan", "Karnataka"],
-        "estimated_yield_per_acre": "800 Kg",
-        "estimated_profit_per_acre_inr": 50000
-    },
-    {
-        "crop": "Maize",
-        "soil_types": ["Loamy", "Red Soil"],
-        "states": ["Karnataka", "Madhya Pradesh", "Bihar", "Tamil Nadu", "Rajasthan"],
-        "estimated_yield_per_acre": "3.0 Tons",
-        "estimated_profit_per_acre_inr": 25000
-    },
-    {
-        "crop": "Soybean",
-        "soil_types": ["Loamy", "Black Soil"],
-        "states": ["Madhya Pradesh", "Maharashtra", "Rajasthan", "Karnataka", "Andhra Pradesh"],
-        "estimated_yield_per_acre": "1.2 Tons",
-        "estimated_profit_per_acre_inr": 30000
-    }
+  {
+    "crop": "Rice",
+    "soil_types": ["Alluvial", "Clayey"],
+    "states": ["West Bengal", "Uttar Pradesh", "Punjab"],
+    "estimated_yield_per_acre": "2.5 Tons",
+    "estimated_profit_per_acre_inr": 35000
+  },
+  {
+    "crop": "Wheat",
+    "soil_types": ["Loamy", "Clayey"],
+    "states": ["Uttar Pradesh", "Punjab", "Haryana"],
+    "estimated_yield_per_acre": "2.0 Tons",
+    "estimated_profit_per_acre_inr": 40000
+  },
+  {
+    "crop": "Tomato",
+    "soil_types": ["Sandy Loam", "Clay Loam"],
+    "states": ["Maharashtra", "Karnataka", "Andhra Pradesh"],
+    "estimated_yield_per_acre": "10 Tons",
+    "estimated_profit_per_acre_inr": 120000
+  }
 ]

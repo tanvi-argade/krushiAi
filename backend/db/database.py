@@ -30,10 +30,19 @@ def save_query(module, input_data, output_data):
     conn.commit()
     conn.close()
 
-def get_history():
+def get_history(limit=10):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM query_history ORDER BY timestamp DESC')
+    cursor.execute('SELECT module, input_data, output_data, timestamp FROM query_history ORDER BY timestamp DESC LIMIT ?', (limit,))
     rows = cursor.fetchall()
     conn.close()
-    return rows
+    
+    history = []
+    for row in rows:
+        history.append({
+            "module": row[0],
+            "input_data": json.loads(row[1]),
+            "output_data": json.loads(row[2]),
+            "timestamp": row[3]
+        })
+    return history
