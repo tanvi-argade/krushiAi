@@ -1,12 +1,11 @@
-```markdown
 # KrushiAI — AI-Powered Farm Advisory Platform
+An intelligent agricultural advisory platform that helps Indian farmers make data-driven decisions about crop selection, pest detection, market pricing, and irrigation scheduling.
+![Python](https://img.shields.io/badge/Python-3.12-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green) ![React](https://img.shields.io/badge/React-18-61DAFB) ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-An intelligent agricultural advisory system that helps Indian farmers make
-data-driven decisions about crop selection, pest detection, irrigation
-scheduling, and market pricing.
+---
 
-Built with React, FastAPI, PyTorch, and scikit-learn. Runs fully offline
-after initial setup.
+## Overview
+An intelligent agricultural advisory system that helps Indian farmers make data-driven decisions about crop selection, pest detection, irrigation scheduling, and market pricing. Built with React, FastAPI, PyTorch, and scikit-learn. Runs fully offline after initial setup.
 
 ---
 
@@ -17,7 +16,7 @@ after initial setup.
 | Pest Detection | Upload crop leaf image → detects disease + treatment | MobileNetV2, PlantVillage dataset |
 | Crop Advisor | Soil + climate inputs → top 3 crop recommendations | Random Forest, 2200-row dataset |
 | Irrigation Advisor | Location + crop → daily water schedule | FAO-56 formula, Open-Meteo API |
-| Market Predictor | Crop + region → best price and sell date | Coming in Week 2 |
+| Market Predictor | Crop + region → best sell date and price prediction | Random Forest, Agmarknet data |
 
 ---
 
@@ -36,48 +35,46 @@ after initial setup.
 
 ## Project Structure
 
-```
-krushiAi/
-├── backend/
-│   ├── main.py                        # FastAPI entry point
-│   ├── routes/
-│   │   ├── pest.py                    # Pest detection endpoint
-│   │   ├── crop.py                    # Crop recommendation endpoint
-│   │   ├── market.py                  # Market price endpoint
-│   │   └── irrigation.py              # Irrigation schedule endpoint
-│   ├── models/
-│   │   ├── download_model.py          # Downloads pest detection model
-│   │   ├── train_crop_model.py        # Trains crop recommendation model
-│   │   ├── crop_model.pkl             # Trained Random Forest model
-│   │   └── crop_label_encoder.pkl     # Label encoder for crop model
-│   ├── data/
-│   │   ├── crop_recommendation.csv    # Training dataset (2200 rows, 22 crops)
-│   │   ├── crop_soil_map.json         # Indian crop metadata (33 crops)
-│   │   └── treatments.json            # Plant disease treatment map
-│   ├── db/
-│   │   └── database.py                # SQLite setup and query history
-│   └── requirements.txt
-└── frontend/
-    └── src/
-        └── App.js                     # React UI (all pages)
-```
+    krushiAi/
+    ├── backend/
+    │   ├── main.py                        # FastAPI entry point
+    │   ├── routes/
+    │   │   ├── pest.py                    # Pest detection endpoint
+    │   │   ├── crop.py                    # Crop recommendation endpoint
+    │   │   ├── market.py                  # Market price endpoint
+    │   │   └── irrigation.py              # Irrigation schedule endpoint
+    │   ├── models/
+    │   │   ├── download_model.py          # Downloads pest detection model
+    │   │   ├── train_crop_model.py        # Trains crop recommendation model
+    │   │   ├── crop_model.pkl             # Trained Random Forest model
+    │   │   └── crop_label_encoder.pkl     # Label encoder for crop model
+    │   ├── data/
+    │   │   ├── crop_recommendation.csv    # Training dataset (2200 rows, 22 crops)
+    │   │   ├── crop_soil_map.json         # Indian crop metadata (33 crops)
+    │   │   └── treatments.json            # Plant disease treatment map
+    │   ├── db/
+    │   │   └── database.py                # SQLite setup and query history
+    │   └── requirements.txt
+    └── frontend/
+        └── src/
+            └── App.js                     # React UI (all pages)
 
 ---
 
-## Setup & Installation
+## Setup and Installation
 
 ### Prerequisites
 - Python 3.10+
 - Node.js 18+
 
-### 1. Clone the repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/tanvi-argade/krushiAi.git
 cd krushiAi
 ```
 
-### 2. Backend setup
+### Backend Setup
 
 ```bash
 cd backend
@@ -86,13 +83,13 @@ venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 ```
 
-### 3. Download pest detection model (one time, ~100MB)
+### Download Pest Detection Model
 
 ```bash
 python models/download_model.py
 ```
 
-### 4. Train crop recommendation model (one time, takes ~10 seconds)
+### Train Crop Recommendation Model
 
 ```bash
 python models/train_crop_model.py
@@ -100,7 +97,7 @@ python models/train_crop_model.py
 
 Expected output: `Model accuracy: 0.97xx`
 
-### 5. Start backend
+### Start Backend
 
 ```bash
 uvicorn main:app --reload --port 8000
@@ -109,7 +106,7 @@ uvicorn main:app --reload --port 8000
 Backend runs at `http://localhost:8000`
 API docs at `http://localhost:8000/docs`
 
-### 6. Frontend setup
+### Frontend Setup
 
 ```bash
 cd ../frontend
@@ -135,7 +132,9 @@ Frontend runs at `http://localhost:3000`
 
 ---
 
-## How Pest Detection Works
+## How It Works
+
+### How Pest Detection Works
 
 1. Farmer uploads a crop leaf image
 2. Image is validated (must not be solid color or non-plant)
@@ -144,7 +143,7 @@ Frontend runs at `http://localhost:3000`
 5. Disease label is matched to treatments.json for advice
 6. Result is saved to SQLite history
 
-## How Crop Advisor Works
+### How Crop Advisor Works
 
 1. Farmer enters soil type, location, land size, season
 2. If soil test report is available (N, P, K, pH, rainfall):
@@ -170,15 +169,12 @@ Frontend runs at `http://localhost:3000`
 
 ## Known Limitations
 
-- Pest detection model trained on PlantVillage (lab conditions).
-  Accuracy may be lower on field photos with background noise.
-- Crop dataset covers 22 crops. Regional variety names (Basmati, Sona Masoori)
-  not differentiated.
+- Pest detection model trained on PlantVillage (lab conditions). Accuracy may be lower on field photos with background noise.
+- Crop dataset covers 22 crops. Regional variety names (Basmati, Sona Masoori) not differentiated.
 - Market price prediction uses historical averages, not live mandi prices.
 
 ---
 
 ## Author
-
-Tanvi Argade
-```
+**Tanvi Argade**
+[GitHub](https://github.com/tanvi-argade)
