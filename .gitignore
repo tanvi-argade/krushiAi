@@ -3,7 +3,6 @@ node_modules/
 venv/
 .venv/
 env/
-.env/
 backend/venv/
 frontend/node_modules/
 
@@ -13,13 +12,12 @@ dist/
 frontend/build/
 frontend/dist/
 
-# Python cache and metadata
+# Python cache
 __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
 .mypy_cache/
-.ruff_cache/
 
 # Environment files
 .env
@@ -32,16 +30,21 @@ __pycache__/
 backend/db/*.db
 !backend/db/.gitkeep
 
-# ML / AI artifacts
+# Large AI model files ONLY (HuggingFace pest model — 100MB+)
+backend/models/pest_model/
 *.pt
 *.pth
 *.bin
-*.pkl
 *.h5
 *.onnx
 *.safetensors
 .huggingface/
-.cache/huggingface/
+.cache/
+
+# Keep these — small sklearn models needed to run the app
+# crop_model.pkl — 4.5MB, keep in git
+# crop_label_encoder.pkl — tiny, keep in git
+# crop_classes.json — tiny, keep in git
 
 # Logs
 *.log
@@ -58,7 +61,6 @@ Thumbs.db
 *.swo
 
 # Misc
-.pnp
-.pnp.js
 coverage/
 frontend/coverage/
+scratch/
