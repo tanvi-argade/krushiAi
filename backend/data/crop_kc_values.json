@@ -1,0 +1,19 @@
+{
+  "rice":        {"kc_ini":1.05, "kc_mid":1.20, "kc_end":0.90, "stage_days":[30,30,60,30], "root_depth_m":0.5},
+  "wheat":       {"kc_ini":0.30, "kc_mid":1.15, "kc_end":0.30, "stage_days":[20,25,60,30], "root_depth_m":1.0},
+  "maize":       {"kc_ini":0.30, "kc_mid":1.20, "kc_end":0.35, "stage_days":[20,35,40,30], "root_depth_m":1.0},
+  "cotton":      {"kc_ini":0.35, "kc_mid":1.15, "kc_end":0.70, "stage_days":[30,50,55,45], "root_depth_m":1.0},
+  "sugarcane":   {"kc_ini":0.40, "kc_mid":1.25, "kc_end":0.75, "stage_days":[35,60,190,120],"root_depth_m":1.2},
+  "soybean":     {"kc_ini":0.40, "kc_mid":1.15, "kc_end":0.50, "stage_days":[20,30,60,25], "root_depth_m":0.8},
+  "potato":      {"kc_ini":0.50, "kc_mid":1.15, "kc_end":0.75, "stage_days":[25,30,30,20], "root_depth_m":0.4},
+  "tomato":      {"kc_ini":0.60, "kc_mid":1.15, "kc_end":0.70, "stage_days":[30,40,40,25], "root_depth_m":0.7},
+  "onion":       {"kc_ini":0.70, "kc_mid":1.05, "kc_end":0.75, "stage_days":[15,25,70,40], "root_depth_m":0.3},
+  "chickpea":    {"kc_ini":0.40, "kc_mid":1.00, "kc_end":0.35, "stage_days":[20,30,35,20], "root_depth_m":0.6},
+  "mustard":     {"kc_ini":0.35, "kc_mid":1.10, "kc_end":0.35, "stage_days":[20,25,45,20], "root_depth_m":0.8},
+  "groundnut":   {"kc_ini":0.40, "kc_mid":1.15, "kc_end":0.60, "stage_days":[25,35,45,25], "root_depth_m":0.5},
+  "sunflower":   {"kc_ini":0.35, "kc_mid":1.10, "kc_end":0.35, "stage_days":[25,35,45,25], "root_depth_m":0.8},
+  "bajra":       {"kc_ini":0.30, "kc_mid":1.15, "kc_end":0.55, "stage_days":[15,25,40,25], "root_depth_m":0.8},
+  "pigeonpeas":  {"kc_ini":0.40, "kc_mid":1.05, "kc_end":0.55, "stage_days":[20,30,70,35], "root_depth_m":1.0},
+  "banana":      {"kc_ini":0.50, "kc_mid":1.10, "kc_end":1.00, "stage_days":[120,60,180,5],"root_depth_m":0.5},
+  "default":     {"kc_ini":0.40, "kc_mid":1.10, "kc_end":0.60, "stage_days":[20,30,50,20], "root_depth_m":0.6}
+}

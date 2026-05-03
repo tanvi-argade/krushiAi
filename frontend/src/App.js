@@ -33,6 +33,7 @@ const App = () => {
           <span style={styles.navLink(activeTab === 'Home')} onClick={() => setActiveTab('Home')}>Home</span>
           <span style={styles.navLink(activeTab === 'Pest')} onClick={() => setActiveTab('Pest')}>Pest Detection</span>
           <span style={styles.navLink(activeTab === 'Crop')} onClick={() => setActiveTab('Crop')}>Crop Advisor</span>
+          <span style={styles.navLink(activeTab === 'Irrigation')} onClick={() => setActiveTab('Irrigation')}>Irrigation Advisor</span>
         </div>
       </nav>
 
@@ -47,6 +48,7 @@ const App = () => {
 
         {activeTab === 'Pest' && <PestDetection styles={styles} />}
         {activeTab === 'Crop' && <CropAdvisor styles={styles} />}
+        {activeTab === 'Irrigation' && <IrrigationAdvisor styles={styles} />}
       </div>
     </div>
   );
@@ -399,6 +401,160 @@ const PestDetection = ({ styles }) => {
           <p><strong>Treatment:</strong> {result.treatment}</p>
           <p><strong>Prevention:</strong> {result.prevention}</p>
           <p style={{ fontSize: '12px', color: '#888' }}>Model Label: {result.raw_label}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const IrrigationAdvisor = ({ styles }) => {
+  const [formData, setFormData] = useState({
+    crop: 'Rice',
+    location: '',
+    sowing_date: new Date().toISOString().split('T')[0],
+    soil_type: 'Loamy',
+    land_size_acres: 1.0
+  });
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.post('http://localhost:8000/irrigation/schedule', formData);
+      setResults(response.data);
+    } catch (err) {
+      setError(err.response?.data?.detail || "Failed to fetch irrigation schedule.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const localStyles = {
+    formGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '20px' },
+    formGroup: { display: 'flex', flexDirection: 'column', gap: '5px' },
+    label: { fontWeight: '600', fontSize: '14px', color: '#444' },
+    input: { padding: '10px', borderRadius: '5px', border: '1px solid #ddd' },
+    summaryCard: { backgroundColor: '#e3f2fd', padding: '20px', borderRadius: '10px', marginBottom: '25px', display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: '20px' },
+    statItem: { textAlign: 'center' },
+    statValue: { fontSize: '24px', fontWeight: 'bold', color: '#1976d2' },
+    statLabel: { fontSize: '12px', color: '#666', textTransform: 'uppercase' },
+    tableContainer: { overflowX: 'auto', marginTop: '20px' },
+    table: { width: '100%', borderCollapse: 'collapse', fontSize: '14px' },
+    th: { backgroundColor: '#f5f5f5', padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' },
+    td: (needed) => ({ padding: '12px', borderBottom: '1px solid #eee', backgroundColor: needed ? '#e1f5fe' : '#e8f5e9' }),
+    stageBadge: (stage) => ({
+      padding: '4px 10px',
+      borderRadius: '20px',
+      fontSize: '11px',
+      fontWeight: 'bold',
+      backgroundColor: stage === 'mid-season' ? '#4caf50' : stage === 'development' ? '#2196f3' : '#ff9800',
+      color: 'white'
+    })
+  };
+
+  const crops = ["Rice", "Wheat", "Maize", "Cotton", "Sugarcane", "Soybean", "Potato", "Tomato", "Onion", "Chickpea", "Mustard", "Groundnut", "Sunflower", "Bajra", "Pigeonpeas", "Banana"];
+  const soils = ["Sandy", "Loamy", "Clay", "Black", "Red", "Alluvial", "Laterite"];
+
+  return (
+    <div style={styles.card}>
+      <h2 style={{ color: '#2d5a27', marginBottom: '10px' }}>Irrigation Advisor</h2>
+      <p style={{ marginBottom: '25px', color: '#666' }}>Smart water scheduling based on FAO-56 science and real-time weather.</p>
+
+      <form onSubmit={handleSubmit}>
+        <div style={localStyles.formGrid}>
+          <div style={localStyles.formGroup}>
+            <label style={localStyles.label}>Crop</label>
+            <select style={localStyles.input} value={formData.crop} onChange={(e) => setFormData({...formData, crop: e.target.value})}>
+              {crops.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
+          <div style={localStyles.formGroup}>
+            <label style={localStyles.label}>Location</label>
+            <input style={localStyles.input} placeholder="e.g. Pune, Nashik" value={formData.location} onChange={(e) => setFormData({...formData, location: e.target.value})} required />
+          </div>
+          <div style={localStyles.formGroup}>
+            <label style={localStyles.label}>Sowing Date</label>
+            <input type="date" style={localStyles.input} value={formData.sowing_date} onChange={(e) => setFormData({...formData, sowing_date: e.target.value})} required />
+          </div>
+          <div style={localStyles.formGroup}>
+            <label style={localStyles.label}>Soil Type</label>
+            <select style={localStyles.input} value={formData.soil_type} onChange={(e) => setFormData({...formData, soil_type: e.target.value})}>
+              {soils.map(s => <option key={s} value={s}>{s}</option>)}
+            </select>
+          </div>
+          <div style={localStyles.formGroup}>
+            <label style={localStyles.label}>Land Size (Acres)</label>
+            <input type="number" step="0.1" style={localStyles.input} value={formData.land_size_acres} onChange={(e) => setFormData({...formData, land_size_acres: parseFloat(e.target.value)})} />
+          </div>
+        </div>
+        <button type="submit" style={{ ...styles.button, width: '100%' }} disabled={loading}>
+          {loading ? 'Fetching Weather & Calculating...' : 'Generate 7-Day Schedule'}
+        </button>
+      </form>
+
+      {error && <div style={{ color: 'red', marginTop: '20px', textAlign: 'center' }}>{error}</div>}
+
+      {results && (
+        <div style={{ marginTop: '30px' }}>
+          <div style={localStyles.summaryCard}>
+            <div style={localStyles.statItem}>
+              <div style={localStyles.statLabel}>Current Stage</div>
+              <span style={localStyles.stageBadge(results.current_growth_stage)}>{results.current_growth_stage}</span>
+            </div>
+            <div style={localStyles.statItem}>
+              <div style={localStyles.statLabel}>Total Weekly Need</div>
+              <div style={localStyles.statValue}>{results['7_day_summary'].total_irrigation_needed_mm} mm</div>
+            </div>
+            <div style={localStyles.statItem}>
+              <div style={localStyles.statLabel}>Total Liters</div>
+              <div style={localStyles.statValue}>{results['7_day_summary'].total_irrigation_liters_per_acre.toLocaleString()} L/ac</div>
+            </div>
+            <div style={localStyles.statItem}>
+              <div style={localStyles.statLabel}>Days to Irrigate</div>
+              <div style={localStyles.statValue}>{results['7_day_summary'].days_requiring_irrigation} / 7</div>
+            </div>
+          </div>
+
+          <div style={localStyles.tableContainer}>
+            <table style={localStyles.table}>
+              <thead>
+                <tr>
+                  <th style={localStyles.th}>Date</th>
+                  <th style={localStyles.th}>Stage</th>
+                  <th style={localStyles.th}>Temp (°C)</th>
+                  <th style={localStyles.th}>Rain</th>
+                  <th style={localStyles.th}>ETo</th>
+                  <th style={localStyles.th}>Kc</th>
+                  <th style={localStyles.th}>Need?</th>
+                  <th style={localStyles.th}>Amount (mm)</th>
+                  <th style={localStyles.th}>Liters/ac</th>
+                </tr>
+              </thead>
+              <tbody>
+                {results.daily_schedule.map((day, idx) => (
+                  <tr key={idx}>
+                    <td style={localStyles.td(day.recommendation.irrigate)}>{new Date(day.date).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' })}</td>
+                    <td style={localStyles.td(day.recommendation.irrigate)}><span style={localStyles.stageBadge(day.growth_stage)}>{day.growth_stage}</span></td>
+                    <td style={localStyles.td(day.recommendation.irrigate)}>{day.weather.tmax}°</td>
+                    <td style={localStyles.td(day.recommendation.irrigate)}>{day.weather.rainfall_mm}mm</td>
+                    <td style={localStyles.td(day.recommendation.irrigate)}>{day.calculation.eto_mm}</td>
+                    <td style={localStyles.td(day.recommendation.irrigate)}>{day.calculation.kc}</td>
+                    <td style={localStyles.td(day.recommendation.irrigate)}>{day.recommendation.irrigate ? '✅ Yes' : '❌ No'}</td>
+                    <td style={localStyles.td(day.recommendation.irrigate)}><strong>{day.recommendation.amount_mm}</strong></td>
+                    <td style={localStyles.td(day.recommendation.irrigate)}>{day.recommendation.amount_liters_per_acre.toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '5px', borderLeft: '5px solid #1976d2' }}>
+             <strong>Next Irrigation:</strong> {results.daily_schedule.find(d => d.recommendation.irrigate)?.date || 'No irrigation needed this week'} — {results.daily_schedule.find(d => d.recommendation.irrigate)?.recommendation.amount_mm || 0} mm ({results.daily_schedule.find(d => d.recommendation.irrigate)?.recommendation.amount_liters_per_acre.toLocaleString() || 0} L/acre)
+          </div>
         </div>
       )}
     </div>

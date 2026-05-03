@@ -1,0 +1,10 @@
+{
+  "sandy":      {"field_capacity_mm_per_m": 100, "wilting_point_mm_per_m": 50,  "depletion_fraction": 0.50},
+  "loamy":      {"field_capacity_mm_per_m": 170, "wilting_point_mm_per_m": 90,  "depletion_fraction": 0.50},
+  "clay":       {"field_capacity_mm_per_m": 200, "wilting_point_mm_per_m": 130, "depletion_fraction": 0.45},
+  "black":      {"field_capacity_mm_per_m": 220, "wilting_point_mm_per_m": 140, "depletion_fraction": 0.45},
+  "red":        {"field_capacity_mm_per_m": 130, "wilting_point_mm_per_m": 70,  "depletion_fraction": 0.50},
+  "alluvial":   {"field_capacity_mm_per_m": 180, "wilting_point_mm_per_m": 95,  "depletion_fraction": 0.50},
+  "laterite":   {"field_capacity_mm_per_m": 120, "wilting_point_mm_per_m": 65,  "depletion_fraction": 0.55},
+  "default":    {"field_capacity_mm_per_m": 160, "wilting_point_mm_per_m": 85,  "depletion_fraction": 0.50}
+}
