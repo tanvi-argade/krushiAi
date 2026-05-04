@@ -34,6 +34,7 @@ const App = () => {
           <span style={styles.navLink(activeTab === 'Pest')} onClick={() => setActiveTab('Pest')}>Pest Detection</span>
           <span style={styles.navLink(activeTab === 'Crop')} onClick={() => setActiveTab('Crop')}>Crop Advisor</span>
           <span style={styles.navLink(activeTab === 'Irrigation')} onClick={() => setActiveTab('Irrigation')}>Irrigation Advisor</span>
+          <span style={styles.navLink(activeTab === 'Market')} onClick={() => setActiveTab('Market')}>Market Predictor</span>
         </div>
       </nav>
 
@@ -49,6 +50,7 @@ const App = () => {
         {activeTab === 'Pest' && <PestDetection styles={styles} />}
         {activeTab === 'Crop' && <CropAdvisor styles={styles} />}
         {activeTab === 'Irrigation' && <IrrigationAdvisor styles={styles} />}
+        {activeTab === 'Market' && <MarketPredictor styles={styles} />}
       </div>
     </div>
   );
@@ -554,6 +556,200 @@ const IrrigationAdvisor = ({ styles }) => {
 
           <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f9f9f9', borderRadius: '5px', borderLeft: '5px solid #1976d2' }}>
              <strong>Next Irrigation:</strong> {results.daily_schedule.find(d => d.recommendation.irrigate)?.date || 'No irrigation needed this week'} — {results.daily_schedule.find(d => d.recommendation.irrigate)?.recommendation.amount_mm || 0} mm ({results.daily_schedule.find(d => d.recommendation.irrigate)?.recommendation.amount_liters_per_acre.toLocaleString() || 0} L/acre)
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const MarketPredictor = ({ styles }) => {
+  const [formData, setFormData] = useState({
+    crop: '',
+    state: '',
+    harvest_date: new Date().toISOString().split('T')[0]
+  });
+  const [crops, setCrops] = useState([]);
+  const [states, setStates] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const canvasRef = React.useRef(null);
+
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        const [cropRes, stateRes] = await Promise.all([
+          axios.get('http://localhost:8000/market/crops'),
+          axios.get('http://localhost:8000/market/states')
+        ]);
+        setCrops(cropRes.data.crops);
+        setStates(stateRes.data.states);
+        if (cropRes.data.crops.length > 0) setFormData(prev => ({ ...prev, crop: cropRes.data.crops[0] }));
+        if (stateRes.data.states.length > 0) setFormData(prev => ({ ...prev, state: stateRes.data.states[0] }));
+      } catch (err) {
+        console.error("Error fetching market metadata", err);
+      }
+    };
+    fetchMetadata();
+  }, []);
+
+  useEffect(() => {
+    if (result && canvasRef.current) {
+      drawChart();
+    }
+  }, [result]);
+
+  const drawChart = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const data = result['30_day_forecast'];
+    const bestDate = result.summary.best_day_to_sell;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const padding = 40;
+    const chartWidth = canvas.width - padding * 2;
+    const chartHeight = canvas.height - padding * 2;
+
+    const maxPrice = Math.max(...data.map(d => d.predicted_price_per_quintal)) * 1.1;
+    const minPrice = Math.min(...data.map(d => d.predicted_price_per_quintal)) * 0.9;
+    const priceRange = maxPrice - minPrice;
+
+    const barWidth = chartWidth / data.length - 4;
+
+    data.forEach((day, i) => {
+      const x = padding + i * (barWidth + 4);
+      const h = ((day.predicted_price_per_quintal - minPrice) / priceRange) * chartHeight;
+      const y = canvas.height - padding - h;
+
+      // Color
+      ctx.fillStyle = day.date === bestDate ? '#FFD700' : '#4caf50';
+      
+      // Draw bar
+      ctx.fillRect(x, y, barWidth, h);
+
+      // X-axis labels (every 5th)
+      if (i % 5 === 0) {
+        ctx.fillStyle = '#666';
+        ctx.font = '10px Arial';
+        ctx.textAlign = 'center';
+        const dateStr = day.date.split('-').slice(1).reverse().join('/');
+        ctx.fillText(dateStr, x + barWidth / 2, canvas.height - padding + 15);
+      }
+    });
+
+    // Y-axis labels
+    ctx.fillStyle = '#666';
+    ctx.font = '10px Arial';
+    ctx.textAlign = 'right';
+    ctx.fillText(`₹${Math.round(maxPrice)}`, padding - 5, padding);
+    ctx.fillText(`₹${Math.round(minPrice)}`, padding - 5, canvas.height - padding);
+    
+    // Axis lines
+    ctx.strokeStyle = '#ddd';
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, canvas.height - padding);
+    ctx.lineTo(canvas.width - padding, canvas.height - padding);
+    ctx.stroke();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await axios.post('http://localhost:8000/market/predict', formData);
+      setResult(response.data);
+    } catch (err) {
+      setError(err.response?.data?.detail || "Failed to get price prediction.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const localStyles = {
+    formGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '20px' },
+    formGroup: { display: 'flex', flexDirection: 'column', gap: '5px' },
+    label: { fontWeight: '600', fontSize: '14px', color: '#444' },
+    input: { padding: '10px', borderRadius: '5px', border: '1px solid #ddd' },
+    summaryCard: { backgroundColor: '#f1f8e9', border: '2px solid #4caf50', padding: '20px', borderRadius: '12px', marginBottom: '25px', textAlign: 'center' },
+    bestDate: { fontSize: '20px', color: '#2d5a27', fontWeight: 'bold', marginBottom: '10px' },
+    mainPrice: { fontSize: '42px', fontWeight: 'bold', color: '#2e7d32', margin: '10px 0' },
+    kgPrice: { fontSize: '18px', color: '#666', marginBottom: '15px' },
+    trendBadge: (trend) => ({
+      display: 'inline-block',
+      padding: '5px 15px',
+      borderRadius: '20px',
+      backgroundColor: trend === 'rising' ? '#e8f5e9' : trend === 'falling' ? '#ffebee' : '#f5f5f5',
+      color: trend === 'rising' ? '#2e7d32' : trend === 'falling' ? '#c62828' : '#616161',
+      fontWeight: 'bold',
+      fontSize: '14px'
+    }),
+    chartContainer: { backgroundColor: 'white', padding: '20px', borderRadius: '8px', border: '1px solid #eee', marginTop: '20px' },
+    footer: { marginTop: '30px', fontSize: '12px', color: '#888', textAlign: 'center', borderTop: '1px solid #eee', paddingTop: '15px' }
+  };
+
+  return (
+    <div style={styles.card}>
+      <h2 style={{ color: '#2d5a27', marginBottom: '10px' }}>Market Price Predictor</h2>
+      <p style={{ marginBottom: '25px', color: '#666' }}>Predict crop prices and find the best time to sell your harvest.</p>
+
+      <form onSubmit={handleSubmit}>
+        <div style={localStyles.formGrid}>
+          <div style={localStyles.formGroup}>
+            <label style={localStyles.label}>Crop</label>
+            <select style={localStyles.input} value={formData.crop} onChange={(e) => setFormData({...formData, crop: e.target.value})}>
+              {crops.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
+          <div style={localStyles.formGroup}>
+            <label style={localStyles.label}>State</label>
+            <select style={localStyles.input} value={formData.state} onChange={(e) => setFormData({...formData, state: e.target.value})}>
+              {states.map(s => <option key={s} value={s}>{s}</option>)}
+            </select>
+          </div>
+          <div style={localStyles.formGroup}>
+            <label style={localStyles.label}>Harvest Date</label>
+            <input type="date" style={localStyles.input} value={formData.harvest_date} onChange={(e) => setFormData({...formData, harvest_date: e.target.value})} />
+          </div>
+        </div>
+        <button type="submit" style={{ ...styles.button, width: '100%' }} disabled={loading}>
+          {loading ? 'Analyzing Market Trends...' : 'Predict Best Price'}
+        </button>
+      </form>
+
+      {error && <div style={{ color: 'red', marginTop: '20px', textAlign: 'center' }}>{error}</div>}
+
+      {result && (
+        <div style={{ marginTop: '30px' }}>
+          <div style={localStyles.summaryCard}>
+            <div style={localStyles.bestDate}>Best day to sell: {new Date(result.summary.best_day_to_sell).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+            <div style={localStyles.mainPrice}>₹{result.summary.best_price_per_quintal.toLocaleString()} <span style={{fontSize: '16px', fontWeight: 'normal'}}>/ quintal</span></div>
+            <div style={localStyles.kgPrice}>Equivalent to ₹{result.summary.best_price_per_kg} / kg</div>
+            
+            <div style={{ marginBottom: '15px' }}>
+              <span style={localStyles.trendBadge(result.summary.price_trend)}>
+                {result.summary.price_trend === 'rising' ? '▲ Rising' : result.summary.price_trend === 'falling' ? '▼ Falling' : '➡ Stable'}
+              </span>
+            </div>
+            
+            <div style={{ fontStyle: 'italic', color: '#444' }}>{result.summary.advice}</div>
+          </div>
+
+          <div style={localStyles.chartContainer}>
+            <h4 style={{ margin: '0 0 15px 0', color: '#444' }}>30-Day Price Forecast</h4>
+            <canvas ref={canvasRef} width={800} height={300} style={{ width: '100%', height: 'auto' }} />
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '10px', fontSize: '12px' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><div style={{ width: '12px', height: '12px', backgroundColor: '#FFD700' }}></div> Best Day</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><div style={{ width: '12px', height: '12px', backgroundColor: '#4caf50' }}></div> Predicted Price</span>
+            </div>
+          </div>
+
+          <div style={localStyles.footer}>
+            Model MAE: ₹{result.model_accuracy.mae_inr_per_quintal} | R² Score: {result.model_accuracy.r2_score} | Trained on real Agmarknet mandi data
           </div>
         </div>
       )}

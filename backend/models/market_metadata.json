@@ -1,0 +1,55 @@
+{
+  "crops": [
+    "onion",
+    "potato",
+    "rice",
+    "tomato",
+    "wheat"
+  ],
+  "states": [
+    "andhra pradesh",
+    "assam",
+    "bihar",
+    "chandigarh",
+    "chattisgarh",
+    "chhattisgarh",
+    "delhi",
+    "gao",
+    "gujarat",
+    "haryana",
+    "himachal pradesh",
+    "jammu & kashmir",
+    "jammu and kashmir",
+    "karnataka",
+    "kerala",
+    "madhya pradesh",
+    "maharashtra",
+    "manipur",
+    "meghalaya",
+    "nagaland",
+    "orissa",
+    "punjab",
+    "rajasthan",
+    "tamil nadu",
+    "tamilnadu",
+    "tripura",
+    "uttar pradesh",
+    "uttrakhand",
+    "west bengal"
+  ],
+  "feature_cols": [
+    "crop_encoded",
+    "state_encoded",
+    "month",
+    "year",
+    "day_of_year",
+    "quarter"
+  ],
+  "mae": 493.3,
+  "r2": 0.521,
+  "total_records": 297180,
+  "date_range": {
+    "min": "2023-01-07",
+    "max": "2025-12-05"
+  }
+}
