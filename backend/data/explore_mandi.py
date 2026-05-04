@@ -19,6 +19,17 @@ print("Sample:", df.head(3).to_string())
 # Find the date column name
 # Find the state column name
 
+# Normalize state names for consistent analysis
+state_map = {
+    "chattisgarh": "chhattisgarh",
+    "tamilnadu": "tamil nadu",
+    "jammu & kashmir": "jammu and kashmir",
+    "gao": "goa",
+    "uttrakhand": "uttarakhand"
+}
+df['STATE'] = df['STATE'].str.lower().str.strip().replace(state_map)
+df['Commodity'] = df['Commodity'].str.lower().str.strip()
+
 # Print unique values for each key column
 for col in df.columns:
     unique_count = df[col].nunique()

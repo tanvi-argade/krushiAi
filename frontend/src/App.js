@@ -726,9 +726,9 @@ const MarketPredictor = ({ styles }) => {
       {result && (
         <div style={{ marginTop: '30px' }}>
           <div style={localStyles.summaryCard}>
-            <div style={localStyles.bestDate}>Best day to sell: {new Date(result.summary.best_day_to_sell).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
-            <div style={localStyles.mainPrice}>₹{result.summary.best_price_per_quintal.toLocaleString()} <span style={{fontSize: '16px', fontWeight: 'normal'}}>/ quintal</span></div>
-            <div style={localStyles.kgPrice}>Equivalent to ₹{result.summary.best_price_per_kg} / kg</div>
+            <div style={localStyles.bestDate}>Best day to sell: {result.summary.best_day_to_sell !== null ? new Date(result.summary.best_day_to_sell).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A'}</div>
+            <div style={localStyles.mainPrice}>₹{result.summary.best_price_per_quintal !== null ? result.summary.best_price_per_quintal.toLocaleString() : 'N/A'} <span style={{fontSize: '16px', fontWeight: 'normal'}}>/ quintal</span></div>
+            <div style={localStyles.kgPrice}>Equivalent to ₹{result.summary.best_price_per_kg !== null ? result.summary.best_price_per_kg : 'N/A'} / kg</div>
             
             <div style={{ marginBottom: '15px' }}>
               <span style={localStyles.trendBadge(result.summary.price_trend)}>
@@ -749,7 +749,7 @@ const MarketPredictor = ({ styles }) => {
           </div>
 
           <div style={localStyles.footer}>
-            Model MAE: ₹{result.model_accuracy.mae_inr_per_quintal} | R² Score: {result.model_accuracy.r2_score} | Trained on real Agmarknet mandi data
+            Model MAE: ₹{result.model_accuracy.mae_inr_per_quintal !== null ? result.model_accuracy.mae_inr_per_quintal.toLocaleString() : 'N/A'} | R² Score: {result.model_accuracy.r2_score !== null ? result.model_accuracy.r2_score.toFixed(4) : 'N/A'} | Trained on real Agmarknet mandi data
           </div>
         </div>
       )}
