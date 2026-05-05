@@ -106,9 +106,7 @@ async def detect_pest(file: UploadFile = File(...)):
 @router.get("/history")
 async def pest_history():
     try:
-        history = get_history(limit=10)
-        # Filter for pest module only
-        pest_history = [h for h in history if h["module"] == "pest"]
-        return pest_history
+        rows = get_history(module="pest", limit=10)
+        return rows
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching history: {str(e)}")

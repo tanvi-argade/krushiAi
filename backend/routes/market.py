@@ -88,6 +88,19 @@ async def predict_market_price(req: MarketRequest):
 
     base_date = datetime.strptime(req.harvest_date, "%Y-%m-%d") if req.harvest_date else datetime.now()
 
+    current_year = datetime.now().year
+    training_max_year = int(market_meta.get("date_range", { "max": "2025-01-01" })
+                            .get("max", "2025-01-01")[:4])
+
+    if base_date.year > training_max_year:
+        extrapolation_warning = (
+            f"Note: Predicting beyond training data range "
+            f"(trained up to {training_max_year}). "
+            f"Treat as trend indicator, not exact price."
+        )
+    else:
+        extrapolation_warning = None
+
     history = latest_prices.get(f"{crop_clean}_{state_clean}", [])
     if not history:
         current_lags = {'price_lag_1': 1500, 'price_lag_7': 1500, 'price_lag_30': 1500, 'rolling_mean_7': 1500}
@@ -160,6 +173,7 @@ async def predict_market_price(req: MarketRequest):
     response = {
         "crop": req.crop,
         "state": req.state,
+        "extrapolation_warning": extrapolation_warning,
         "summary": summary,
         "model_accuracy": {
             "mae_inr_per_quintal": market_meta.get("mae"),

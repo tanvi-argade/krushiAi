@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const API_BASE = process.env.REACT_APP_API_URL || 
+                 'http://localhost:8000';
+
 const App = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const [healthStatus, setHealthStatus] = useState('Checking...');
 
   useEffect(() => {
-    axios.get('http://localhost:8000/')
+    axios.get(`${API_BASE}/`)
       .then(res => setHealthStatus(res.data.status))
       .catch(err => setHealthStatus('Backend Offline'));
   }, []);
@@ -76,8 +79,8 @@ const CropAdvisor = ({ styles }) => {
     const fetchMetadata = async () => {
       try {
         const [soilRes, stateRes] = await Promise.all([
-          axios.get('http://localhost:8000/crop/soils'),
-          axios.get('http://localhost:8000/crop/states')
+          axios.get(`${API_BASE}/crop/soils`),
+          axios.get(`${API_BASE}/crop/states`)
         ]);
         setSoils(soilRes.data);
         setStates(stateRes.data);
@@ -108,7 +111,7 @@ const CropAdvisor = ({ styles }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/crop/recommend', payload);
+      const response = await axios.post(`${API_BASE}/crop/recommend`, payload);
       setResults(response.data);
     } catch (err) {
       setError("Failed to get recommendations. Please try again.");
@@ -323,7 +326,7 @@ const PestDetection = ({ styles }) => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await axios.post('http://localhost:8000/pest/detect', formData, {
+      const response = await axios.post(`${API_BASE}/pest/detect`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setResult(response.data);
@@ -426,10 +429,18 @@ const IrrigationAdvisor = ({ styles }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('http://localhost:8000/irrigation/schedule', formData);
-      setResults(response.data);
+      const response = await axios.post(`${API_BASE}/irrigation/schedule`, formData);
+      
+      if (!response.data.success) {
+        console.error(response.data.error);
+        setResults(null);
+        setError(response.data.error?.message || "API Error");
+        return;
+      }
+      
+      setResults(response.data.data);
     } catch (err) {
-      setError(err.response?.data?.detail || "Failed to fetch irrigation schedule.");
+      setError(err.response?.data?.error?.message || "Failed to fetch irrigation schedule.");
     } finally {
       setLoading(false);
     }
@@ -580,8 +591,8 @@ const MarketPredictor = ({ styles }) => {
     const fetchMetadata = async () => {
       try {
         const [cropRes, stateRes] = await Promise.all([
-          axios.get('http://localhost:8000/market/crops'),
-          axios.get('http://localhost:8000/market/states')
+          axios.get(`${API_BASE}/market/crops`),
+          axios.get(`${API_BASE}/market/states`)
         ]);
         setCrops(cropRes.data.crops);
         setStates(stateRes.data.states);
@@ -661,7 +672,7 @@ const MarketPredictor = ({ styles }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('http://localhost:8000/market/predict', formData);
+      const response = await axios.post(`${API_BASE}/market/predict`, formData);
       setResult(response.data);
     } catch (err) {
       setError(err.response?.data?.detail || "Failed to get price prediction.");
