@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { 
-  Droplets, 
-  CloudRain, 
-  Thermometer, 
+import {
+  Droplets,
+  CloudRain,
+  Thermometer,
   Calendar,
   CheckCircle2,
   AlertCircle,
@@ -67,9 +67,9 @@ const Irrigation = ({ profile }) => {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">Crop</label>
-            <select 
+            <select
               className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
-              value={form.crop} 
+              value={form.crop}
               onChange={e => setForm({ ...form, crop: e.target.value })}
             >
               {crops.map(c => <option key={c} value={c}>{c}</option>)}
@@ -77,32 +77,32 @@ const Irrigation = ({ profile }) => {
           </div>
           <div className="space-y-2">
             <label className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">Soil Type</label>
-            <select 
+            <select
               className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
-              value={form.soil_type} 
+              value={form.soil_type}
               onChange={e => setForm({ ...form, soil_type: e.target.value })}
             >
               {soils.map(s => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
-          <Input 
-            label="Location" 
-            placeholder="e.g. Pune" 
-            value={form.location} 
-            onChange={e => setForm({ ...form, location: e.target.value })} 
+          <Input
+            label="Location"
+            placeholder="e.g. Pune"
+            value={form.location}
+            onChange={e => setForm({ ...form, location: e.target.value })}
           />
-          <Input 
-            label="Land Size (Acres)" 
-            type="number" 
-            step="0.1" 
-            value={form.land_size_acres} 
-            onChange={e => setForm({ ...form, land_size_acres: e.target.value })} 
+          <Input
+            label="Land Size (Acres)"
+            type="number"
+            step="0.1"
+            value={form.land_size_acres}
+            onChange={e => setForm({ ...form, land_size_acres: e.target.value })}
           />
-          <Input 
-            label="Sowing Date" 
-            type="date" 
-            value={form.sowing_date} 
-            onChange={e => setForm({ ...form, sowing_date: e.target.value })} 
+          <Input
+            label="Sowing Date"
+            type="date"
+            value={form.sowing_date}
+            onChange={e => setForm({ ...form, sowing_date: e.target.value })}
           />
           <div className="md:col-span-1 lg:col-span-1 flex items-end">
             <Button variant="primary" type="submit" className="w-full" disabled={loading}>
@@ -147,17 +147,17 @@ const Irrigation = ({ profile }) => {
               <Calendar size={20} className="text-nature-leaf" />
               7-Day Schedule
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {results.daily_schedule.map((day, i) => {
                 const irrigate = day.recommendation.irrigate;
                 return (
-                  <Card 
-                    key={i} 
+                  <Card
+                    key={i}
                     className={`
                       border-2 transition-all 
-                      ${irrigate 
-                        ? 'border-nature-sky/30 shadow-premium bg-gradient-to-br from-white to-nature-sky/5 dark:from-dark-card dark:to-nature-sky/5' 
+                      ${irrigate
+                        ? 'border-nature-sky/30 shadow-premium bg-gradient-to-br from-white to-nature-sky/5 dark:from-dark-card dark:to-nature-sky/5'
                         : 'border-transparent'}
                     `}
                   >

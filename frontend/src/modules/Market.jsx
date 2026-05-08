@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {
-  TrendingUp,
-  TrendingDown,
-  Calendar,
-  IndianRupee,
-  ArrowRight,
-  Info,
   CalendarDays,
   LineChart,
   ArrowUpRight,
@@ -31,7 +25,7 @@ const Market = ({ profile }) => {
 
   const [form, setForm] = useState({
     crop: profile?.crop || '',
-    state: profile?.location || '',
+    state: profile?.state || '',
     harvest_date: defaultHarvest
   });
 
@@ -43,19 +37,23 @@ const Market = ({ profile }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    if (profile?.crop) setForm(f => ({ ...f, crop: profile.crop }));
+    if (profile?.state) setForm(f => ({ ...f, state: profile.state }));
+
     axios.get(`${API_BASE}/market/crops`).then(res => {
       setCrops(res.data.crops);
-      if (!form.crop && res.data.crops.length > 0) setForm(f => ({ ...f, crop: res.data.crops[0] }));
+      if (!form.crop && !profile?.crop && res.data.crops.length > 0) setForm(f => ({ ...f, crop: res.data.crops[0] }));
     }).catch(() => null);
     axios.get(`${API_BASE}/market/states`).then(res => {
       setStates(res.data.states);
-      if (!form.state && res.data.states.length > 0) setForm(f => ({ ...f, state: res.data.states[0] }));
+      if (!form.state && !profile?.state && res.data.states.length > 0) setForm(f => ({ ...f, state: res.data.states[0] }));
     }).catch(() => null);
 
-    if (profile?.crop && profile?.location) {
+    if (profile?.crop && profile?.state) {
       handleSubmit();
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile]);
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
@@ -75,6 +73,7 @@ const Market = ({ profile }) => {
     if (result && canvasRef.current) {
       drawChart();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result]);
 
   const drawChart = () => {

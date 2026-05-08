@@ -1,9 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Card = ({ children, className = '', animate = true }) => {
+const Card = ({ children, className = '', animate = true, ...props }) => {
   const content = (
-    <div className={`premium-card p-6 ${className}`}>
+    <div className={`premium-card p-6 cursor-pointer transition-all duration-300 ${className}`} {...props}>
       {children}
     </div>
   );

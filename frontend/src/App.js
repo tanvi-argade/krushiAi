@@ -18,7 +18,7 @@ export const useFarmer = () => useContext(FarmerContext);
 const AppContent = () => {
   const [activeTab, setActiveTab] = useState('Home');
   const { profile, setProfile } = useFarmer();
-  
+
   const [cropData, setCropData] = useState({ loading: false, data: null, error: null });
   const [irrigationData, setIrrigationData] = useState({ loading: false, data: null, error: null });
   const [marketData, setMarketData] = useState({ loading: false, data: null, error: null });
@@ -29,10 +29,10 @@ const AppContent = () => {
     // Crop Recommendation
     setCropData(prev => ({ ...prev, loading: true, error: null }));
     axios.post(`${API_BASE}/crop/recommend`, {
-      soil_type: prof.soilType || 'Loamy', 
-      location: prof.location, 
-      land_size: Number(prof.landSize) || 1.0, 
-      water_availability: 'Medium', 
+      soil_type: prof.soilType || 'Loamy',
+      location: prof.location,
+      land_size: Number(prof.landSize) || 1.0,
+      water_availability: 'Medium',
       season: 'Kharif'
     }).then(res => setCropData({ loading: false, data: res.data, error: null }))
       .catch(err => setCropData({ loading: false, data: null, error: err.response?.data?.detail || err.message }));
@@ -40,10 +40,10 @@ const AppContent = () => {
     // Irrigation Schedule
     setIrrigationData(prev => ({ ...prev, loading: true, error: null }));
     axios.post(`${API_BASE}/irrigation/schedule`, {
-      crop: prof.crop || 'Rice', 
-      location: prof.location, 
-      sowing_date: prof.sowingDate || new Date().toISOString().split('T')[0], 
-      soil_type: prof.soilType || 'Loamy', 
+      crop: prof.crop || 'Rice',
+      location: prof.location,
+      sowing_date: prof.sowingDate || new Date().toISOString().split('T')[0],
+      soil_type: prof.soilType || 'Loamy',
       land_size_acres: Number(prof.landSize) || 1.0
     }).then(res => {
       if (res.data.success) {
@@ -59,8 +59,8 @@ const AppContent = () => {
     harvestDate.setDate(harvestDate.getDate() + 90);
     const harvestStr = harvestDate.toISOString().split('T')[0];
     axios.post(`${API_BASE}/market/predict`, {
-      crop: prof.crop || 'Wheat', 
-      state: prof.location, 
+      crop: prof.crop || 'Wheat',
+      state: prof.state,
       harvest_date: harvestStr
     }).then(res => setMarketData({ loading: false, data: res.data, error: null }))
       .catch(err => setMarketData({ loading: false, data: null, error: err.response?.data?.detail || err.message }));
@@ -76,9 +76,9 @@ const AppContent = () => {
     switch (activeTab) {
       case 'Home':
         return (
-          <Dashboard 
-            profile={profile} 
-            setProfile={setProfile} 
+          <Dashboard
+            profile={profile}
+            setProfile={setProfile}
             navigateTo={setActiveTab}
             fetchSummaries={fetchSummaries}
             cropData={cropData}

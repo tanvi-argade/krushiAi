@@ -29,8 +29,8 @@ const Navbar = ({ activeTab, onNavigate }) => {
             onClick={() => onNavigate(item.id)}
             className={`
               flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200
-              ${activeTab === item.id 
-                ? 'bg-nature-leaf text-white shadow-lg shadow-nature-leaf/20' 
+              ${activeTab === item.id
+                ? 'bg-nature-leaf text-white shadow-lg shadow-nature-leaf/20'
                 : 'text-nature-soil/60 dark:text-dark-text/60 hover:bg-nature-leaf/5 hover:text-nature-leaf dark:hover:text-nature-sky'}
             `}
           >

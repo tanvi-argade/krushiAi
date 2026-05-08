@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  CloudSun, 
-  Droplets, 
-  TrendingUp, 
-  Bug, 
-  Sprout, 
+
+import {
+  CloudSun,
+  Droplets,
+  TrendingUp,
+  Bug,
+  Sprout,
   ArrowRight,
   ChevronRight,
-  AlertCircle,
-  CheckCircle2,
   Edit3
 } from 'lucide-react';
 import Card from '../components/ui/Card';
@@ -19,7 +17,7 @@ import Badge from '../components/ui/Badge';
 const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, irrigationData, marketData }) => {
   const [isEditing, setIsEditing] = useState(!profile);
   const [form, setForm] = useState(profile || {
-    name: '', location: '', crop: '', soilType: 'Loamy', landSize: '', sowingDate: ''
+    name: '', location: '', state: '', crop: '', soilType: 'Loamy', landSize: '', sowingDate: ''
   });
 
   const getTimeOfDay = () => {
@@ -46,7 +44,7 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
             Here's what's happening on your farm today.
           </p>
         </div>
-        
+
         {profile && (
           <div className="flex items-center gap-4 bg-white/50 dark:bg-dark-card/50 backdrop-blur-sm p-4 rounded-2xl border border-nature-fog dark:border-white/5">
             <div className="bg-nature-sky/20 p-3 rounded-xl text-nature-sky">
@@ -70,7 +68,7 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
           <div className="absolute top-0 right-0 p-8 opacity-10">
             <Sprout size={200} />
           </div>
-          
+
           <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1 space-y-4">
               <Badge variant="primary" className="bg-white/20 text-white border-none">
@@ -81,8 +79,8 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
                 The current weather is favorable for your {profile?.crop || 'crops'}. Keep monitoring the soil moisture.
               </p>
               <div className="pt-4">
-                <Button 
-                  variant="secondary" 
+                <Button
+                  variant="secondary"
                   onClick={() => navigateTo('Crop')}
                   icon={ArrowRight}
                 >
@@ -129,14 +127,17 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
       {/* Quick Insights Grid */}
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Irrigation Insight */}
-        <Card className="flex flex-col hover:border-nature-sky/30">
+        <Card
+          className="flex flex-col hover:border-nature-sky/30"
+          onClick={() => navigateTo('Water')}
+        >
           <div className="flex justify-between items-start mb-6">
             <div className="p-3 bg-nature-sky/10 text-nature-sky rounded-2xl">
               <Droplets size={24} />
             </div>
-            <button onClick={() => navigateTo('Water')} className="text-nature-sage hover:text-nature-sky transition-colors">
+            <div className="text-nature-sage hover:text-nature-sky transition-colors">
               <ChevronRight size={20} />
-            </button>
+            </div>
           </div>
           <h3 className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest mb-2">Irrigation</h3>
           <div className="flex-1">
@@ -162,14 +163,17 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
         </Card>
 
         {/* Market Insight */}
-        <Card className="flex flex-col hover:border-nature-wheat/30">
+        <Card
+          className="flex flex-col hover:border-nature-wheat/30"
+          onClick={() => navigateTo('Market')}
+        >
           <div className="flex justify-between items-start mb-6">
             <div className="p-3 bg-nature-wheat/10 text-nature-wheat rounded-2xl">
               <TrendingUp size={24} />
             </div>
-            <button onClick={() => navigateTo('Market')} className="text-nature-sage hover:text-nature-wheat transition-colors">
+            <div className="text-nature-sage hover:text-nature-wheat transition-colors">
               <ChevronRight size={20} />
-            </button>
+            </div>
           </div>
           <h3 className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest mb-2">Market Trend</h3>
           <div className="flex-1">
@@ -192,14 +196,17 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
         </Card>
 
         {/* Pest Insight */}
-        <Card className="flex flex-col hover:border-red-400/30">
+        <Card
+          className="flex flex-col hover:border-red-400/30"
+          onClick={() => navigateTo('Pest')}
+        >
           <div className="flex justify-between items-start mb-6">
             <div className="p-3 bg-red-100 text-red-500 dark:bg-red-900/20 rounded-2xl">
               <Bug size={24} />
             </div>
-            <button onClick={() => navigateTo('Pest')} className="text-nature-sage hover:text-red-500 transition-colors">
+            <div className="text-nature-sage hover:text-red-500 transition-colors">
               <ChevronRight size={20} />
-            </button>
+            </div>
           </div>
           <h3 className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest mb-2">Pest Risk</h3>
           <div className="flex-1 space-y-1">
@@ -209,14 +216,17 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
         </Card>
 
         {/* Crop Insight */}
-        <Card className="flex flex-col hover:border-nature-leaf/30">
+        <Card
+          className="flex flex-col hover:border-nature-leaf/30"
+          onClick={() => navigateTo('Crop')}
+        >
           <div className="flex justify-between items-start mb-6">
             <div className="p-3 bg-nature-leaf/10 text-nature-leaf rounded-2xl">
               <Sprout size={24} />
             </div>
-            <button onClick={() => navigateTo('Crop')} className="text-nature-sage hover:text-nature-leaf transition-colors">
+            <div className="text-nature-sage hover:text-nature-leaf transition-colors">
               <ChevronRight size={20} />
-            </button>
+            </div>
           </div>
           <h3 className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest mb-2">Next Season</h3>
           <div className="flex-1">
@@ -256,28 +266,63 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-4">
                 <label className="block text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">Farmer Name</label>
-                <input 
+                <input
                   className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
-                  value={form.name} 
-                  onChange={e => setForm({ ...form, name: e.target.value })} 
+                  value={form.name}
+                  onChange={e => setForm({ ...form, name: e.target.value })}
                   placeholder="e.g. Ramesh Kumar"
                 />
               </div>
               <div className="space-y-4">
                 <label className="block text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">Location</label>
-                <input 
+                <input
                   className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
-                  value={form.location} 
-                  onChange={e => setForm({ ...form, location: e.target.value })} 
+                  value={form.location}
+                  onChange={e => setForm({ ...form, location: e.target.value })}
                   placeholder="e.g. Pune, Maharashtra"
                 />
               </div>
               <div className="space-y-4">
-                <label className="block text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">Current Crop</label>
-                <input 
+                <label className="block text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">State</label>
+                <select
                   className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
-                  value={form.crop} 
-                  onChange={e => setForm({ ...form, crop: e.target.value })} 
+                  value={form.state}
+                  onChange={e => setForm({ ...form, state: e.target.value })}
+                >
+                  <option value="">Select State</option>
+                  {["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"].map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-4">
+                <label className="block text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">Land Size (Acres)</label>
+                <input
+                  type="number"
+                  className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
+                  value={form.landSize}
+                  onChange={e => setForm({ ...form, landSize: e.target.value })}
+                  placeholder="e.g. 5.5"
+                />
+              </div>
+              <div className="space-y-4">
+                <label className="block text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">Soil Type</label>
+                <select
+                  className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
+                  value={form.soilType}
+                  onChange={e => setForm({ ...form, soilType: e.target.value })}
+                >
+                  {["Loamy", "Sandy", "Clay", "Red", "Black"].map(t => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-4">
+                <label className="block text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest">Current Crop</label>
+                <input
+                  className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
+                  value={form.crop}
+                  onChange={e => setForm({ ...form, crop: e.target.value })}
                   placeholder="e.g. Wheat"
                 />
               </div>
@@ -289,8 +334,8 @@ const Dashboard = ({ profile, setProfile, navigateTo, fetchSummaries, cropData, 
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               <div>
-                <p className="text-xs font-bold text-nature-soil/40 dark:text-dark-muted uppercase tracking-widest mb-1">Location</p>
-                <p className="text-lg font-bold text-nature-soil dark:text-dark-text">{profile?.location || '--'}</p>
+                <p className="text-xs font-bold text-nature-soil/40 dark:text-dark-muted uppercase tracking-widest mb-1">State</p>
+                <p className="text-lg font-bold text-nature-soil dark:text-dark-text">{profile?.state || '--'}</p>
               </div>
               <div>
                 <p className="text-xs font-bold text-nature-soil/40 dark:text-dark-muted uppercase tracking-widest mb-1">Main Crop</p>

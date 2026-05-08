@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { 
-  Sprout, 
-  IndianRupee, 
-  Calendar, 
-  Clock, 
-  CheckCircle2, 
+import {
+  Sprout,
+  IndianRupee,
+  Calendar,
+  Clock,
+  CheckCircle2,
   AlertCircle,
   HelpCircle,
   BarChart3,
@@ -23,7 +23,7 @@ const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000';
 const Crop = ({ profile }) => {
   const [form, setForm] = useState({
     soil_type: profile?.soilType || 'Loamy',
-    location: profile?.location || '',
+    location: profile?.state || '',
     land_size: profile?.landSize || '',
     water_availability: 'Medium',
     season: 'Kharif'
@@ -36,11 +36,37 @@ const Crop = ({ profile }) => {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
+
+  const CROP_TIPS = {
+    "Rice": { depth: "2-3 cm", water: "Constant (5-10 cm standing water)", harvest: "105-150 days" },
+    "Maize": { depth: "3-5 cm", water: "Moderate (every 7-10 days)", harvest: "90-110 days" },
+    "Chickpea": { depth: "5-7 cm", water: "Low (2-3 irrigations)", harvest: "110-120 days" },
+    "Kidneybeans": { depth: "3-4 cm", water: "Regular (every 4-5 days)", harvest: "70-90 days" },
+    "Pigeonpeas": { depth: "4-5 cm", water: "Low (drought tolerant)", harvest: "150-180 days" },
+    "Mothbeans": { depth: "2-3 cm", water: "Very Low", harvest: "75-90 days" },
+    "Mungbean": { depth: "3-4 cm", water: "Moderate", harvest: "60-75 days" },
+    "Blackgram": { depth: "3-4 cm", water: "Moderate", harvest: "70-80 days" },
+    "Lentil": { depth: "3-4 cm", water: "Low", harvest: "110-130 days" },
+    "Pomegranate": { depth: "Sapling", water: "Drip irrigation", harvest: "5-7 months" },
+    "Banana": { depth: "Rhizome", water: "High", harvest: "10-12 months" },
+    "Mango": { depth: "Grafted Sapling", water: "Moderate", harvest: "3-5 months" },
+    "Grapes": { depth: "Cutting", water: "Controlled", harvest: "90-120 days" },
+    "Watermelon": { depth: "2-3 cm", water: "High during growth", harvest: "75-95 days" },
+    "Muskmelon": { depth: "2-3 cm", water: "Moderate", harvest: "80-90 days" },
+    "Apple": { depth: "Sapling", water: "Regular", harvest: "130-150 days" },
+    "Orange": { depth: "Sapling", water: "Regular", harvest: "6-8 months" },
+    "Papaya": { depth: "1 cm", water: "Moderate", harvest: "9-11 months" },
+    "Coconut": { depth: "Seedling", water: "High", harvest: "12 months" },
+    "Cotton": { depth: "4-5 cm", water: "Moderate", harvest: "150-180 days" },
+    "Jute": { depth: "1-2 cm", water: "High", harvest: "110-120 days" },
+    "Coffee": { depth: "Sapling", water: "High", harvest: "7-9 months" }
+  };
 
   useEffect(() => {
     axios.get(`${API_BASE}/crop/soils`).then(res => setSoils(res.data)).catch(() => null);
     axios.get(`${API_BASE}/crop/states`).then(res => setStates(res.data)).catch(() => null);
-    
+
     if (profile?.location && profile?.soilType) {
       handleSubmit();
     }
@@ -51,7 +77,7 @@ const Crop = ({ profile }) => {
     setLoading(true);
     setError(null);
     const payload = { ...form, land_size: parseFloat(form.land_size) || 1.0 };
-    
+
     if (showSoilTest) {
       Object.entries(advForm).forEach(([k, v]) => {
         if (v) payload[k] = parseFloat(v);
@@ -83,9 +109,9 @@ const Crop = ({ profile }) => {
               <label className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest flex items-center gap-2">
                 <MapPin size={14} /> Location
               </label>
-              <select 
+              <select
                 className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
-                value={form.location} 
+                value={form.location}
                 onChange={e => setForm({ ...form, location: e.target.value })}
               >
                 <option value="">Select State</option>
@@ -96,9 +122,9 @@ const Crop = ({ profile }) => {
               <label className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest flex items-center gap-2">
                 <Waves size={14} /> Soil Type
               </label>
-              <select 
+              <select
                 className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
-                value={form.soil_type} 
+                value={form.soil_type}
                 onChange={e => setForm({ ...form, soil_type: e.target.value })}
               >
                 {soils.map(s => <option key={s} value={s}>{s}</option>)}
@@ -108,9 +134,9 @@ const Crop = ({ profile }) => {
               <label className="text-sm font-bold text-nature-soil/50 dark:text-dark-muted uppercase tracking-widest flex items-center gap-2">
                 <Calendar size={14} /> Season
               </label>
-              <select 
+              <select
                 className="w-full bg-nature-earth/50 dark:bg-dark-bg p-4 rounded-xl border border-nature-fog dark:border-white/10 outline-none focus:border-nature-leaf transition-all"
-                value={form.season} 
+                value={form.season}
                 onChange={e => setForm({ ...form, season: e.target.value })}
               >
                 <option>Kharif</option>
@@ -119,17 +145,17 @@ const Crop = ({ profile }) => {
                 <option>Both</option>
               </select>
             </div>
-            <Input 
-              label="Land Size (Acres)" 
-              type="number" 
-              step="0.1" 
-              value={form.land_size} 
-              onChange={e => setForm({ ...form, land_size: e.target.value })} 
+            <Input
+              label="Land Size (Acres)"
+              type="number"
+              step="0.1"
+              value={form.land_size}
+              onChange={e => setForm({ ...form, land_size: e.target.value })}
             />
           </div>
 
           <div className="p-6 bg-nature-earth/50 dark:bg-dark-bg/50 rounded-3xl border border-nature-fog dark:border-white/10">
-            <button 
+            <button
               type="button"
               onClick={() => setShowSoilTest(!showSoilTest)}
               className="flex items-center gap-3 w-full text-left"
@@ -145,13 +171,13 @@ const Crop = ({ profile }) => {
             {showSoilTest && (
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mt-6 animate-slide-up">
                 {Object.keys(advForm).map(k => (
-                  <Input 
+                  <Input
                     key={k}
-                    label={k.toUpperCase()} 
-                    type="number" 
+                    label={k.toUpperCase()}
+                    type="number"
                     placeholder="--"
-                    value={advForm[k]} 
-                    onChange={e => setAdvForm({ ...advForm, [k]: e.target.value })} 
+                    value={advForm[k]}
+                    onChange={e => setAdvForm({ ...advForm, [k]: e.target.value })}
                   />
                 ))}
               </div>
@@ -177,7 +203,7 @@ const Crop = ({ profile }) => {
             <Sparkles size={24} className="text-nature-wheat" />
             Recommended for your {results.land_size} acre farm
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {results.recommendations.map((rec, i) => {
               const rankStyles = {
@@ -244,9 +270,35 @@ const Crop = ({ profile }) => {
                       </p>
                       <p className="text-sm font-medium leading-relaxed">{rec.match_reason}</p>
                     </div>
-                    <Button variant={rec.rank === 1 ? 'primary' : 'outline'} className="w-full">
-                      View Cultivation Guide
+                    <Button
+                      variant={rec.rank === 1 ? 'primary' : 'outline'}
+                      className="w-full"
+                      onClick={() => setExpandedId(expandedId === rec.crop ? null : rec.crop)}
+                    >
+                      {expandedId === rec.crop ? 'Hide Guide' : 'View Cultivation Guide'}
                     </Button>
+
+                    {expandedId === rec.crop && (
+                      <div className="p-4 bg-nature-leaf/10 dark:bg-nature-leaf/5 rounded-2xl border border-nature-leaf/20 animate-slide-up">
+                        <h4 className="text-sm font-bold text-nature-leaf mb-3 flex items-center gap-2">
+                          <Sprout size={14} /> Quick Guide
+                        </h4>
+                        <div className="grid grid-cols-1 gap-3">
+                          <div className="flex justify-between text-xs">
+                            <span className="text-nature-sage font-medium">Sowing Depth:</span>
+                            <span className="font-bold text-nature-soil dark:text-dark-text">{CROP_TIPS[rec.crop]?.depth || '3-5 cm'}</span>
+                          </div>
+                          <div className="flex justify-between text-xs">
+                            <span className="text-nature-sage font-medium">Watering:</span>
+                            <span className="font-bold text-nature-soil dark:text-dark-text">{CROP_TIPS[rec.crop]?.water || 'Moderate'}</span>
+                          </div>
+                          <div className="flex justify-between text-xs">
+                            <span className="text-nature-sage font-medium">Harvest Time:</span>
+                            <span className="font-bold text-nature-soil dark:text-dark-text">{CROP_TIPS[rec.crop]?.harvest || 'Varies'}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Card>
               );
