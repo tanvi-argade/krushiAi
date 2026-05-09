@@ -1,180 +1,227 @@
-# KrushiAI — AI-Powered Farm Advisory Platform
-An intelligent agricultural advisory platform that helps Indian farmers make data-driven decisions about crop selection, pest detection, market pricing, and irrigation scheduling.
-![Python](https://img.shields.io/badge/Python-3.12-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green) ![React](https://img.shields.io/badge/React-18-61DAFB) ![License](https://img.shields.io/badge/License-MIT-yellow)
+# <div align="center">KrushiAI</div>
+<div align="center">
+  <h3>AI-Powered Decision Intelligence for Modern Farming</h3>
+  <p>A comprehensive agricultural advisory platform leveraging computer vision and predictive analytics to empower Indian farmers with data-driven insights.</p>
+</div>
+
+<div align="center">
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Last Commit](https://img.shields.io/github/last-commit/tanvi-argade/krushiAi?style=for-the-badge)
+![Repo Size](https://img.shields.io/github/repo-size/tanvi-argade/krushiAi?style=for-the-badge)
+
+</div>
 
 ---
 
-## Overview
-An intelligent agricultural advisory system that helps Indian farmers make data-driven decisions about crop selection, pest detection, irrigation scheduling, and market pricing. Built with React, FastAPI, PyTorch, and scikit-learn. Runs fully offline after initial setup.
+<div align="center">
+  <img src="assets/logo/krushiai-logo.png" alt="KrushiAI Logo" width="180"/>
+</div>
+
+<div align="center">
+
+#### [Metrics](#-key-metrics) • [Overview](#-project-overview) • [Modules](#-core-module-showcase) • [Architecture](#-architecture-diagram) • [Tech Stack](#-tech-stack) • [Setup](#-local-setup-instructions)
+
+</div>
 
 ---
 
-## Modules
+## 📊 Key Metrics
 
-| Module | Description | Tech |
-|---|---|---|
-| Pest Detection | Upload crop leaf image → detects disease + treatment | MobileNetV2, PlantVillage dataset |
-| Crop Advisor | Soil + climate inputs → top 3 crop recommendations | Random Forest, 2200-row dataset |
-| Irrigation Advisor | Location + crop → daily water schedule | FAO-56 formula, Open-Meteo API |
-| Market Predictor | Crop + region → best sell date and price prediction | Random Forest, Agmarknet data |
+<div align="center">
 
----
+| 🤖 AI Modules | 📈 Market Forecasting | 💧 Irrigation Planning | 📱 UI/UX |
+| :---: | :---: | :---: | :---: |
+| 4 Advisory Engines | 30-Day Predictions | 7-Day Precision Schedule | Fully Responsive |
 
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Frontend | React.js |
-| Backend | Python, FastAPI |
-| Pest Detection Model | HuggingFace Transformers, MobileNetV2 |
-| Crop Recommendation | scikit-learn Random Forest (97% accuracy) |
-| Weather Data | Open-Meteo API (free, no key needed) |
-| Database | SQLite |
+</div>
 
 ---
 
-## Project Structure
+## 📖 Project Overview
 
-    krushiAi/
-    ├── backend/
-    │   ├── main.py                        # FastAPI entry point
-    │   ├── routes/
-    │   │   ├── pest.py                    # Pest detection endpoint
-    │   │   ├── crop.py                    # Crop recommendation endpoint
-    │   │   ├── market.py                  # Market price endpoint
-    │   │   └── irrigation.py              # Irrigation schedule endpoint
-    │   ├── models/
-    │   │   ├── download_model.py          # Downloads pest detection model
-    │   │   ├── train_crop_model.py        # Trains crop recommendation model
-    │   │   ├── crop_model.pkl             # Trained Random Forest model
-    │   │   └── crop_label_encoder.pkl     # Label encoder for crop model
-    │   ├── data/
-    │   │   ├── crop_recommendation.csv    # Training dataset (2200 rows, 22 crops)
-    │   │   ├── crop_soil_map.json         # Indian crop metadata (33 crops)
-    │   │   └── treatments.json            # Plant disease treatment map
-    │   ├── db/
-    │   │   └── database.py                # SQLite setup and query history
-    │   └── requirements.txt
-    └── frontend/
-        └── src/
-            └── App.js                     # React UI (all pages)
+KrushiAI is an AI-powered agricultural advisory platform designed specifically for the needs of Indian farmers. By integrating machine learning, computer vision, and weather intelligence, the platform transforms complex environmental and market data into actionable insights.
+
+The application facilitates precise farming practices, minimizes crop loss due to disease, and optimizes resource management through intelligent forecasting.
 
 ---
 
-## Setup and Installation
+## 🌱 Why KrushiAI?
 
-### Prerequisites
-- Python 3.10+
-- Node.js 18+
+Agricultural decision-making is highly fragmented. Farmers often rely on separate systems for weather analysis, disease identification, irrigation planning, and market forecasting.
 
-### Clone the Repository
+KrushiAI unifies these critical agricultural workflows into a single AI-powered advisory platform, enabling farmers to make faster, data-driven decisions through one integrated system.
 
-```bash
-git clone https://github.com/tanvi-argade/krushiAi.git
-cd krushiAi
-```
+---
+
+## 🛠️ Core Module Showcase
+
+### 🔍 Pest Detection
+Leverages computer vision to identify crop diseases from leaf images. The module provides instant diagnosis with confidence scores and recommended treatments.
+
+![Pest Detection](assets/screenshots/desktop/pest.png)
+
+---
+
+### 🌾 Crop Advisor
+Analyzes soil nutrient profiles (N, P, K) and local climate data to recommend the most compatible crops for maximized yield and long-term sustainability.
+
+![Crop Advisor](assets/screenshots/desktop/crop_advice.png)
+
+---
+
+### 💧 Irrigation Advisor
+Integrates high-resolution weather forecasts to generate precision irrigation schedules, helping farmers optimize water usage while maintaining optimal crop health.
+
+![Irrigation Advisor](assets/screenshots/desktop/irrigation.png)
+
+---
+
+### 📉 Market Predictor
+Forecasts mandi prices and market trends using historical data analysis. This enables farmers to time their harvest and sales for maximum profitability.
+
+![Market Predictor](assets/screenshots/desktop/market.png)
+
+---
+
+## 📱 Mobile Experience
+The platform is designed with a mobile-first approach, ensuring farmers can access critical AI-driven insights directly from the field with a lightweight, responsive interface.
+
+<div align="center">
+  <img src="assets/screenshots/mobile/dashboard.png" width="280" alt="Mobile Dashboard" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="assets/screenshots/mobile/pest.png" width="280" alt="Mobile Pest Detection" />
+</div>
+
+---
+
+## 🏗️ Architecture Diagram
+The system follows a modern decoupled architecture, ensuring scalability and efficient processing of heavy machine learning inference tasks.
+
+![Architecture Diagram](assets/diagrams/architecture.png)
+
+---
+
+## ⚙️ How It Works
+
+<details>
+<summary><b>Pest Detection (Computer Vision)</b></summary>
+- **Input:** User-uploaded crop leaf image.
+- **Processing:** Preprocessing via Torchvision; feature extraction.
+- **ML Usage:** MobileNetV2 with HuggingFace Transformers.
+- **Output:** Disease classification and remedial measures.
+</details>
+
+<details>
+<summary><b>Crop Advisor (ML Classification)</b></summary>
+- **Input:** Soil (N,P,K,pH) and climate variables.
+- **Processing:** Feature scaling and multi-class classification.
+- **ML Usage:** scikit-learn based ensemble models.
+- **Output:** Ranked crop recommendations.
+</details>
+
+<details>
+<summary><b>Irrigation Advisor (API Intelligence)</b></summary>
+- **Input:** Geo-location and soil moisture estimates.
+- **Processing:** Evapotranspiration modeling.
+- **API Usage:** Real-time data from Open-Meteo API.
+- **Output:** 7-day irrigation roadmap.
+</details>
+
+<details>
+<summary><b>Market Predictor (Time-Series)</b></summary>
+- **Input:** Commodity type and Mandi location.
+- **Processing:** Historical price trend analysis.
+- **ML Usage:** Statistical forecasting models.
+- **Output:** 30-day price trend visualizations.
+</details>
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+| :--- | :--- |
+| **Frontend** | React.js v19, Tailwind CSS, Framer Motion, Axios |
+| **Backend** | FastAPI, Python, Pydantic |
+| **Machine Learning** | scikit-learn, MobileNetV2, Transformers, Torch |
+| **Database** | SQLite (Prototyping) |
+| **External APIs** | Open-Meteo API |
+
+---
+
+## 🔌 API Reference
+
+| Endpoint | Method | Purpose |
+| :--- | :--- | :--- |
+| `/pest/predict` | `POST` | Processes crop image and returns disease diagnosis. |
+| `/crop/recommend` | `POST` | Analyzes soil data to recommend suitable crops. |
+| `/irrigation/schedule` | `POST` | Generates a 7-day irrigation plan based on weather. |
+| `/market/predict` | `POST` | Forecasts commodity prices for the next 30 days. |
+
+---
+
+## 🚀 Local Setup Instructions
 
 ### Backend Setup
-
 ```bash
 cd backend
-python -m venv venv
-venv\Scripts\activate        # Windows
 pip install -r requirements.txt
+uvicorn main:app --reload
 ```
-
-### Download Pest Detection Model
-
-```bash
-python models/download_model.py
-```
-
-### Train Crop Recommendation Model
-
-```bash
-python models/train_crop_model.py
-```
-
-Expected output: `Model accuracy: 0.97xx`
-
-### Start Backend
-
-```bash
-uvicorn main:app --reload --port 8000
-```
-
-Backend runs at `http://localhost:8000`
-API docs at `http://localhost:8000/docs`
 
 ### Frontend Setup
-
 ```bash
-cd ../frontend
+cd frontend
 npm install
 npm start
 ```
 
-Frontend runs at `http://localhost:3000`
+---
+
+## 📂 Folder Structure
+```text
+krushiAi/
+├── backend/          # FastAPI server, ML models, and Database
+├── frontend/         # React.js application and UI components
+├── assets/           # Screenshots, Diagrams, and Logos
+└── README.md         # Documentation
+```
 
 ---
 
-## API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | /pest/detect | Upload leaf image, get disease + treatment |
-| GET | /pest/history | Last 10 pest detection queries |
-| POST | /crop/recommend | Get top 3 crop recommendations |
-| GET | /crop/soils | List all supported soil types |
-| GET | /crop/states | List all supported Indian states |
-| POST | /market/predict | Get crop price prediction |
-| POST | /irrigation/schedule | Get irrigation schedule |
+## 🤝 Contributing
+Contributions are welcome. Please follow the standard fork-and-pull-request workflow. For major changes, please open an issue first.
 
 ---
 
-## How It Works
-
-### How Pest Detection Works
-
-1. Farmer uploads a crop leaf image
-2. Image is validated (must not be solid color or non-plant)
-3. MobileNetV2 model runs inference locally (no internet needed)
-4. If confidence < 40%, returns "uncertain" instead of guessing
-5. Disease label is matched to treatments.json for advice
-6. Result is saved to SQLite history
-
-### How Crop Advisor Works
-
-1. Farmer enters soil type, location, land size, season
-2. If soil test report is available (N, P, K, pH, rainfall):
-   - Random Forest ML model predicts best crops (97% accuracy)
-   - Shows "AI Recommended" badge
-3. If no soil test data:
-   - Rule-based filtering on crop_soil_map.json
-   - Shows "Rule Based" badge
-4. Top 3 crops returned with profit estimate for their land size
+## 📜 Acknowledgements
+- **FAO-56:** Irrigation calculation logic.
+- **PlantVillage:** Disease detection dataset.
+- **Open-Meteo:** Weather forecast API.
+- **Agmarknet:** Historical market price data.
 
 ---
 
-## Data Sources
-
-| Data | Source |
-|---|---|
-| Pest detection model | HuggingFace — linkanjarad/mobilenet_v2_1.0_224-plant-disease-identification |
-| Crop recommendation dataset | Kaggle — atharvaingle/crop-recommendation-dataset |
-| Indian crop metadata | ICAR guidelines + Agmarknet averages |
-| Weather data | Open-Meteo (open-meteo.com) |
+## ⚖️ License
+Licensed under the [MIT License](LICENSE).
 
 ---
 
-## Known Limitations
+## 📩 Contact
 
-- Pest detection model trained on PlantVillage (lab conditions). Accuracy may be lower on field photos with background noise.
-- Crop dataset covers 22 crops. Regional variety names (Basmati, Sona Masoori) not differentiated.
-- Market price prediction uses historical averages, not live mandi prices.
+<div align="center">
+
+### Tanvi Argade
+[GitHub](https://github.com/tanvi-argade) • [LinkedIn](https://www.linkedin.com/in/tanvi-argade/) • [Email](mailto:tanviargade1@gmail.com) • [Portfolio](https://tanvi-argade.github.io/portfolio/)
+
+</div>
 
 ---
 
-## Author
-**Tanvi Argade**
-[GitHub](https://github.com/tanvi-argade)
+<div align="center">
+Built with React, FastAPI, and Machine Learning for smarter agricultural decision-making.
+</div>
