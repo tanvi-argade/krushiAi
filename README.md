@@ -18,7 +18,7 @@
 ---
 
 <div align="center">
-  <img src="assets/logo/krushiai-logo.png" alt="KrushiAI Logo" width="180"/>
+  <img src="assets/logo/logo.png" alt="KrushiAI Logo" width="180"/>
 </div>
 
 <div align="center">
@@ -57,12 +57,19 @@ KrushiAI unifies these critical agricultural workflows into a single AI-powered 
 
 ---
 
-## 🛠️ Core Module Showcase
+## 🖥️ Unified Farmer Dashboard
+KrushiAI centralizes agricultural intelligence into a single responsive dashboard for real-time monitoring and decision-making.
 
-### 🔍 Pest Detection
-Leverages computer vision to identify crop diseases from leaf images. The module provides instant diagnosis with confidence scores and recommended treatments.
+![Dashboard](assets/screenshots/desktop/dashboard.png)
 
-![Pest Detection](assets/screenshots/desktop/pest.png)
+---
+
+## 🌾 Core Module Showcase
+
+### 💧 Irrigation Advisor
+Integrates high-resolution weather forecasts to generate precision irrigation schedules, helping farmers optimize water usage while maintaining optimal crop health.
+
+![Irrigation Advisor](assets/screenshots/desktop/irrigation.png)
 
 ---
 
@@ -73,17 +80,17 @@ Analyzes soil nutrient profiles (N, P, K) and local climate data to recommend th
 
 ---
 
-### 💧 Irrigation Advisor
-Integrates high-resolution weather forecasts to generate precision irrigation schedules, helping farmers optimize water usage while maintaining optimal crop health.
-
-![Irrigation Advisor](assets/screenshots/desktop/irrigation.png)
-
----
-
 ### 📉 Market Predictor
 Forecasts mandi prices and market trends using historical data analysis. This enables farmers to time their harvest and sales for maximum profitability.
 
 ![Market Predictor](assets/screenshots/desktop/market.png)
+
+---
+
+### 🔍 Pest Detection
+Leverages computer vision to identify crop diseases from leaf images. The module provides instant diagnosis with confidence scores and recommended treatments.
+
+![Pest Detection](assets/screenshots/desktop/pest.png)
 
 ---
 
@@ -98,7 +105,7 @@ The platform is designed with a mobile-first approach, ensuring farmers can acce
 
 ---
 
-## 🏗️ Architecture Diagram
+## 🏗️ Architecture
 The system follows a modern decoupled architecture, ensuring scalability and efficient processing of heavy machine learning inference tasks.
 
 ![Architecture Diagram](assets/diagrams/architecture.png)
@@ -107,37 +114,47 @@ The system follows a modern decoupled architecture, ensuring scalability and eff
 
 ## ⚙️ How It Works
 
-<details>
-<summary><b>Pest Detection (Computer Vision)</b></summary>
-- **Input:** User-uploaded crop leaf image.
-- **Processing:** Preprocessing via Torchvision; feature extraction.
-- **ML Usage:** MobileNetV2 with HuggingFace Transformers.
-- **Output:** Disease classification and remedial measures.
-</details>
+### 🔍 Pest Detection
 
-<details>
-<summary><b>Crop Advisor (ML Classification)</b></summary>
-- **Input:** Soil (N,P,K,pH) and climate variables.
-- **Processing:** Feature scaling and multi-class classification.
-- **ML Usage:** scikit-learn based ensemble models.
-- **Output:** Ranked crop recommendations.
-</details>
+| Stage | Description |
+| :--- | :--- |
+| **Input** | Farmer uploads a crop leaf image |
+| **Processing** | Image preprocessing and feature extraction |
+| **AI Engine** | MobileNetV2 + HuggingFace Transformers |
+| **Output** | Disease classification with treatment suggestions |
 
-<details>
-<summary><b>Irrigation Advisor (API Intelligence)</b></summary>
-- **Input:** Geo-location and soil moisture estimates.
-- **Processing:** Evapotranspiration modeling.
-- **API Usage:** Real-time data from Open-Meteo API.
-- **Output:** 7-day irrigation roadmap.
-</details>
+---
 
-<details>
-<summary><b>Market Predictor (Time-Series)</b></summary>
-- **Input:** Commodity type and Mandi location.
-- **Processing:** Historical price trend analysis.
-- **ML Usage:** Statistical forecasting models.
-- **Output:** 30-day price trend visualizations.
-</details>
+### 🌾 Crop Advisor
+
+| Stage | Description |
+| :--- | :--- |
+| **Input** | Soil nutrients (N, P, K, pH) and climate data |
+| **Processing** | Feature scaling and crop compatibility analysis |
+| **AI Engine** | scikit-learn ensemble models |
+| **Output** | Ranked crop recommendations |
+
+---
+
+### 💧 Irrigation Advisor
+
+| Stage | Description |
+| :--- | :--- |
+| **Input** | Geo-location and soil moisture estimates |
+| **Processing** | Weather analysis and evapotranspiration modeling |
+| **AI Engine** | Open-Meteo API + irrigation logic |
+| **Output** | 7-day irrigation schedule |
+
+---
+
+### 📉 Market Predictor
+
+| Stage | Description |
+| :--- | :--- |
+| **Input** | Commodity type and mandi location |
+| **Processing** | Historical trend and seasonal analysis |
+| **AI Engine** | Time-series forecasting models |
+| **Output** | 30-day market price predictions |
 
 ---
 
