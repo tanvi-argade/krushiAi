@@ -64,3 +64,10 @@ Thumbs.db
 coverage/
 frontend/coverage/
 scratch/
+backend/tests/
+scratch/
+plan.docx
+frontend/src/App.css
+frontend/src/reportWebVitals.js
+frontend/src/setupTests.js
+frontend/src/App.test.js
