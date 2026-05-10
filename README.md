@@ -23,7 +23,7 @@
 
 <div align="center">
 
-#### [Metrics](#-key-metrics) • [Overview](#-project-overview) • [Modules](#-core-module-showcase) • [Architecture](#-architecture-diagram) • [Tech Stack](#-tech-stack) • [Setup](#-local-setup-instructions)
+#### [Metrics](#-key-metrics) • [Overview](#-project-overview) • [Modules](#-core-module-showcase) • [Architecture](#architecture) • [Tech Stack](#tech-stack) • [Setup](#-local-setup-instructions)
 
 </div>
 
@@ -105,7 +105,7 @@ The platform is designed with a mobile-first approach, ensuring farmers can acce
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 The system follows a modern decoupled architecture, ensuring scalability and efficient processing of heavy machine learning inference tasks.
 
 ![Architecture Diagram](assets/diagrams/architecture.png)
@@ -158,7 +158,7 @@ The system follows a modern decoupled architecture, ensuring scalability and eff
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technology |
 | :--- | :--- |
