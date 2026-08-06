@@ -7,7 +7,10 @@ import numpy as np
 from typing import List, Optional
 from db.database import save_query
 
+import logging
+
 router = APIRouter()
+logger = logging.getLogger("krushiai.crop")
 
 # Load crop data on module startup
 DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "crop_soil_map.json")
@@ -15,7 +18,7 @@ try:
     with open(DATA_PATH, "r") as f:
         CROP_DATA = json.load(f)["crops"]
 except Exception as e:
-    print(f"Error loading crop data: {e}")
+    logger.error(f"Error loading crop data: {e}", exc_info=True)
     CROP_DATA = []
 
 # Load ML model and label encoder
@@ -28,9 +31,10 @@ try:
     with open(LE_PATH, "rb") as f:
         crop_le = pickle.load(f)
 except Exception as e:
-    print(f"Error loading ML model: {e}")
+    logger.error(f"Error loading ML model: {e}", exc_info=True)
     crop_model = None
     crop_le = None
+
 
 class RecommendationRequest(BaseModel):
     soil_type: str

@@ -8,17 +8,20 @@ import os
 import numpy as np
 from db.database import save_query, get_history
 
+import logging
+
 router = APIRouter()
+logger = logging.getLogger("krushiai.pest")
 
 # Load model and extractor once at startup
 MODEL_PATH = "./models/pest_model"
 try:
-    print(f"Loading model from {MODEL_PATH}...")
+    logger.info(f"Loading model from {MODEL_PATH}...")
     extractor = AutoFeatureExtractor.from_pretrained(MODEL_PATH)
     model = AutoModelForImageClassification.from_pretrained(MODEL_PATH)
-    print("Model loaded successfully.")
+    logger.info("Model loaded successfully.")
 except Exception as e:
-    print(f"Error loading model: {e}")
+    logger.error(f"Error loading model: {e}", exc_info=True)
     extractor = None
     model = None
 
@@ -28,8 +31,9 @@ try:
     with open(TREATMENTS_PATH, "r") as f:
         treatments_data = json.load(f)
 except Exception as e:
-    print(f"Error loading treatments.json: {e}")
+    logger.error(f"Error loading treatments.json: {e}", exc_info=True)
     treatments_data = {}
+
 
 @router.post("/detect")
 async def detect_pest(file: UploadFile = File(...)):

@@ -1,4 +1,5 @@
 import json, os, pickle
+import logging
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
@@ -8,6 +9,7 @@ from typing import Optional
 from db.database import save_query
 
 router = APIRouter(tags=["market"])
+logger = logging.getLogger("krushiai.market")
 
 BASE = os.path.dirname(os.path.dirname(__file__))
 
@@ -29,9 +31,9 @@ try:
         market_meta = json.load(f)
     with open(f'{BASE}/models/market_latest_prices.pkl', 'rb') as f:
         latest_prices = pickle.load(f)
-    print("Market model loaded successfully.")
+    logger.info("Market model loaded successfully.")
 except Exception as e:
-    print(f"Market model load error: {e}")
+    logger.error(f"Market model load error: {e}", exc_info=True)
 
 class MarketRequest(BaseModel):
     crop: str

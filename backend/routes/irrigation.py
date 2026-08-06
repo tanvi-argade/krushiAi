@@ -1,4 +1,5 @@
 import json, os, math, requests
+import logging
 from datetime import datetime, date, timedelta
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
@@ -9,6 +10,7 @@ from utils.eto_calculator import (calculate_eto, get_kc_for_stage,
 from db.database import save_query
 
 router = APIRouter(tags=["irrigation"])
+logger = logging.getLogger("krushiai.irrigation")
 
 # Load data files on startup
 BASE = os.path.dirname(os.path.dirname(__file__))
@@ -49,7 +51,7 @@ def get_coordinates(location: str):
             if data.get("results"):
                 result = data["results"][0]
                 # Step 5: Add debug visibility
-                print(f"Geocoding success: {query}")
+                logger.info(f"Geocoding success: {query}")
                 return (result["latitude"], 
                         result["longitude"], 
                         result.get("elevation", 100))

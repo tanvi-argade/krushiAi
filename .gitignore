@@ -31,13 +31,11 @@ backend/db/*.db
 !backend/db/.gitkeep
 
 # Large AI model files ONLY (HuggingFace pest model — 100MB+)
-backend/models/pest_model/
 *.pt
 *.pth
 *.bin
 *.h5
 *.onnx
-*.safetensors
 .huggingface/
 .cache/
 

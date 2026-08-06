@@ -165,7 +165,7 @@ The system follows a modern decoupled architecture, ensuring scalability and eff
 | **Frontend** | React.js v19, Tailwind CSS, Framer Motion, Axios |
 | **Backend** | FastAPI, Python, Pydantic |
 | **Machine Learning** | scikit-learn, MobileNetV2, Transformers, Torch |
-| **Database** | SQLite (Prototyping) |
+| **Database** | PostgreSQL |
 | **External APIs** | Open-Meteo API |
 
 ---
@@ -174,7 +174,7 @@ The system follows a modern decoupled architecture, ensuring scalability and eff
 
 | Endpoint | Method | Purpose |
 | :--- | :--- | :--- |
-| `/pest/predict` | `POST` | Processes crop image and returns disease diagnosis. |
+| `/pest/detect` | `POST` | Processes crop image and returns disease diagnosis. |
 | `/crop/recommend` | `POST` | Analyzes soil data to recommend suitable crops. |
 | `/irrigation/schedule` | `POST` | Generates a 7-day irrigation plan based on weather. |
 | `/market/predict` | `POST` | Forecasts commodity prices for the next 30 days. |
@@ -183,10 +183,28 @@ The system follows a modern decoupled architecture, ensuring scalability and eff
 
 ## 🚀 Local Setup Instructions
 
+### Database Setup
+KrushiAI uses PostgreSQL as the primary database for storing application data, including user query history and module interactions.
+
+1. Install and start PostgreSQL.
+2. Create a database named `krushiai`.
+3. Copy `backend/.env.example` to `backend/.env` and fill in your connection details (either `DATABASE_URL` or individual `DB_*` variables).
+
+
 ### Backend Setup
 ```bash
 cd backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate environment (Windows)
+venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Start FastAPI server
 uvicorn main:app --reload
 ```
 
